@@ -1223,3 +1223,29 @@ section h2 i {
         grid-template-columns: 1fr;
     }
 }
+
+/* Admin Data Management Styles */
+.admin-actions {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.admin-actions .action-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+.admin-info {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 16px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.admin-info strong {
+    color: #495057;
+}

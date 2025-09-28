@@ -1,10 +1,45 @@
 {
-  "users": {},
-  "donations": {},
+  "users": {
+    "demo@example.com": {
+      "firstName": "Demo",
+      "lastName": "User", 
+      "email": "demo@example.com",
+      "password": "demo123",
+      "phone": "+27123456789",
+      "idNumber": "8001015009087",
+      "annualIncome": "500000-1000000",
+      "registrationDate": "2025-09-28T08:00:00.000Z",
+      "totalDonated": 15000,
+      "totalTaxSavings": 4650
+    }
+  },
+  "donations": {
+    "demo@example.com": [
+      {
+        "id": "CERT1727510400000",
+        "ngo": "Gift of the Givers Foundation",
+        "amount": 5000,
+        "taxSavings": 1550,
+        "frequency": "once-off",
+        "date": "2025-09-15T10:00:00.000Z",
+        "certificateDownloaded": false
+      },
+      {
+        "id": "CERT1727596800000", 
+        "ngo": "Teach SA",
+        "amount": 10000,
+        "taxSavings": 3100,
+        "frequency": "monthly",
+        "date": "2025-09-20T14:30:00.000Z",
+        "certificateDownloaded": true
+      }
+    ]
+  },
   "metadata": {
     "created": "2025-09-28T00:00:00.000Z",
+    "lastUpdated": "2025-09-28T12:00:00.000Z",
     "version": "1.0",
-    "totalUsers": 0,
-    "totalDonations": 0
+    "totalUsers": 1,
+    "totalDonations": 2
   }
 }

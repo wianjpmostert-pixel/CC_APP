@@ -34,6 +34,30 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Admin Data Management -->
+            <div class="dashboard-section" id="admin-section">
+                <h3><i class="fas fa-tools"></i> Data Management</h3>
+                <div class="admin-actions">
+                    <button class="action-btn" onclick="exportUserData()" title="Download current data as JSON file">
+                        <i class="fas fa-download"></i> Export Data
+                    </button>
+                    <button class="action-btn" onclick="showDataSummary()" title="View data statistics">
+                        <i class="fas fa-chart-pie"></i> View Summary
+                    </button>
+                    <button class="action-btn" onclick="clearAllData()" title="Clear all stored data" style="background: #e53e3e;">
+                        <i class="fas fa-trash"></i> Clear Data
+                    </button>
+                </div>
+                <div class="admin-info">
+                    <p><i class="fas fa-info-circle"></i> 
+                        <strong>File Storage Instructions:</strong><br>
+                        1. Click "Export Data" to download users.json<br>
+                        2. Replace the users.json file in your project folder<br>
+                        3. Your data will persist across browser sessions
+                    </p>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -871,9 +895,39 @@
 
         async function saveUserData(data) {
             localStorage.setItem('ngo_platform_data', JSON.stringify(data));
+            
+            // Auto-download updated data for file persistence
+            downloadDataFile(data);
         }
 
-        /* Removed downloadUserData function that was causing popup issues */
+        function downloadDataFile(data) {
+            const jsonData = data || JSON.parse(localStorage.getItem('ngo_platform_data'));
+            if (jsonData) {
+                const blob = new Blob([JSON.stringify(jsonData, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'users.json';
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+                
+                console.log('✅ users.json file downloaded! Replace the file in your project folder to persist data.');
+            }
+        }
+
+        // Manual export function for console use
+        function exportUserData() {
+            const data = localStorage.getItem('ngo_platform_data');
+            if (data) {
+                downloadDataFile(JSON.parse(data));
+                console.log('📁 User data exported to users.json file');
+            } else {
+                console.log('❌ No user data found to export');
+            }
+        }
 
         function saveUser(userData) {
             localStorage.setItem('ngo_platform_current_user', JSON.stringify(userData));
@@ -1332,6 +1386,38 @@
             console.log('Auth modal exists:', document.getElementById('auth-modal') ? 'Yes' : 'No');
             console.log('Login form exists:', document.getElementById('login-form-element') ? 'Yes' : 'No');
             console.log('Register form exists:', document.getElementById('register-form-element') ? 'Yes' : 'No');
+        }
+
+        // Data Management Functions
+        function showDataSummary() {
+            const data = JSON.parse(localStorage.getItem('ngo_platform_data') || '{}');
+            const totalUsers = Object.keys(data.users || {}).length;
+            const totalDonations = Object.values(data.donations || {}).flat().length;
+            const totalAmount = Object.values(data.donations || {})
+                .flat()
+                .reduce((sum, donation) => sum + (donation.amount || 0), 0);
+            
+            const summary = `📊 PLATFORM DATA SUMMARY\\n\\n` +
+                `👥 Total Users: ${totalUsers}\\n` +
+                `💰 Total Donations: ${totalDonations}\\n` +
+                `🏦 Total Amount: R${totalAmount.toLocaleString()}\\n` +
+                `📅 Last Updated: ${data.metadata?.lastUpdated || 'Never'}\\n\\n` +
+                `💾 Storage: Browser localStorage + JSON file backup`;
+            
+            alert(summary);
+        }
+
+        function clearAllData() {
+            if (confirm('⚠️ WARNING: This will delete ALL user data and donations!\\n\\nThis action cannot be undone. Are you sure?')) {
+                if (confirm('🔴 FINAL CONFIRMATION: Delete all data permanently?')) {
+                    localStorage.clear();
+                    currentUser = null;
+                    updateUIForLoggedOutUser();
+                    showPage('home');
+                    alert('✅ All data cleared successfully!\\n\\nThe page will reload to reset the application.');
+                    window.location.reload();
+                }
+            }
         }
 
         // Tab switching for application forms
