@@ -19,11 +19,18 @@
                 <a href="#dashboard" class="nav-link">Dashboard</a>
                 <a href="#apply" class="nav-link">Apply</a>
                 <div class="nav-dropdown">
-                    <a href="#" class="nav-link dropdown-toggle">Account <i class="fas fa-chevron-down"></i></a>
+                    <a href="#" class="nav-link dropdown-toggle" id="account-dropdown">
+                        <span id="user-name">Account</span> <i class="fas fa-chevron-down"></i>
+                    </a>
                     <div class="dropdown-menu">
-                        <a href="#login" class="dropdown-item">Login</a>
-                        <a href="#register" class="dropdown-item">Register</a>
-                        <a href="#profile" class="dropdown-item">Profile</a>
+                        <div id="logged-out-menu">
+                            <a href="#" class="dropdown-item" onclick="showAuthModal('login')">Login</a>
+                            <a href="#" class="dropdown-item" onclick="showAuthModal('register')">Register</a>
+                        </div>
+                        <div id="logged-in-menu" style="display: none;">
+                            <a href="#profile" class="dropdown-item">My Profile</a>
+                            <a href="#" class="dropdown-item" onclick="logout()">Logout</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -323,79 +330,65 @@
 
     <!-- Dashboard Section -->
     <div id="dashboard" class="page">
-        <section class="dashboard-section">
+        <!-- Login Required Message -->
+        <section id="login-required" class="dashboard-section">
+            <div class="login-required-content">
+                <i class="fas fa-lock fa-3x"></i>
+                <h2>Login Required</h2>
+                <p>Please login to access your donation dashboard and view your tax certificates.</p>
+                <button class="auth-btn" onclick="showAuthModal('login')">Login Now</button>
+                <p class="auth-switch">Don't have an account? <a href="#" onclick="showAuthModal('register')">Create one here</a></p>
+            </div>
+        </section>
+
+        <!-- Actual Dashboard (Hidden until login) -->
+        <section id="user-dashboard" class="dashboard-section" style="display: none;">
             <h2><i class="fas fa-chart-bar"></i> Your Donation Dashboard</h2>
+            <div class="user-welcome">
+                <h3>Welcome back, <span id="dashboard-user-name">User</span>!</h3>
+                <p>Here's your donation summary and tax savings for the current year.</p>
+            </div>
             <div class="dashboard-container">
                 <div class="dashboard-stats">
                     <div class="stat-card">
                         <i class="fas fa-donate"></i>
                         <h3>Total Donated</h3>
-                        <p class="stat-value">R15,500</p>
+                        <p class="stat-value" id="total-donated">R0</p>
                     </div>
                     <div class="stat-card">
                         <i class="fas fa-calculator"></i>
                         <h3>Tax Savings</h3>
-                        <p class="stat-value">R4,805</p>
+                        <p class="stat-value" id="total-tax-savings">R0</p>
                     </div>
                     <div class="stat-card">
                         <i class="fas fa-heart"></i>
                         <h3>NGOs Supported</h3>
-                        <p class="stat-value">5</p>
+                        <p class="stat-value" id="ngos-supported">0</p>
                     </div>
                     <div class="stat-card">
                         <i class="fas fa-file-alt"></i>
                         <h3>Certificates</h3>
-                        <p class="stat-value">12</p>
+                        <p class="stat-value" id="total-certificates">0</p>
                     </div>
                 </div>
                 
                 <div class="dashboard-content">
                     <div class="donation-history">
                         <h3>Recent Donations</h3>
-                        <div class="history-table">
-                            <div class="table-header">
-                                <span>Date</span>
-                                <span>NGO</span>
-                                <span>Amount</span>
-                                <span>Tax Saved</span>
-                                <span>Certificate</span>
-                            </div>
-                            <div class="table-row">
-                                <span>2024-12-15</span>
-                                <span>Gift of the Givers</span>
-                                <span>R2,500</span>
-                                <span>R775</span>
-                                <span><button class="download-btn" onclick="downloadCertificate('CERT001')">
-                                    <i class="fas fa-download"></i> Download
-                                </button></span>
-                            </div>
-                            <div class="table-row">
-                                <span>2024-11-20</span>
-                                <span>Teach South Africa</span>
-                                <span>R5,000</span>
-                                <span>R1,550</span>
-                                <span><button class="download-btn" onclick="downloadCertificate('CERT002')">
-                                    <i class="fas fa-download"></i> Download
-                                </button></span>
-                            </div>
-                            <div class="table-row">
-                                <span>2024-10-10</span>
-                                <span>WWF South Africa</span>
-                                <span>R3,000</span>
-                                <span>R930</span>
-                                <span><button class="download-btn" onclick="downloadCertificate('CERT003')">
-                                    <i class="fas fa-download"></i> Download
-                                </button></span>
+                        <div id="donations-table">
+                            <div class="no-donations">
+                                <i class="fas fa-heart"></i>
+                                <p>No donations yet. <a href="#donate" onclick="showPage('donate')">Make your first donation</a> to start saving on taxes!</p>
                             </div>
                         </div>
                     </div>
                     
                     <div class="yearly-summary">
-                        <h3>2024 Tax Year Summary</h3>
+                        <h3>2025 Tax Year Summary</h3>
                         <div class="summary-card">
-                            <p>Total Donations: <strong>R15,500</strong></p>
-                            <p>Total Tax Savings: <strong>R4,805</strong></p>
-                            <p>Effective Cost: <strong>R10,695</strong></p>
+                            <p>Total Donations: <strong id="summary-total">R0</strong></p>
+                            <p>Total Tax Savings: <strong id="summary-savings">R0</strong></p>
+                            <p>Effective Cost: <strong id="summary-cost">R0</strong></p>
                             <button class="download-btn large" onclick="downloadAnnualSummary()">
                                 <i class="fas fa-file-pdf"></i> Download Annual Summary
                             </button>
@@ -470,59 +463,152 @@
             <div id="ngo-application" class="apply-content">
                 <h3>Register Your NGO</h3>
                 <p>Get verified and start receiving tax-deductible donations from our platform.</p>
-                <form class="application-form">
-                    <div class="form-group">
-                        <label for="ngo-name">Organization Name</label>
-                        <input type="text" id="ngo-name" required>
-                    </div>
-                    <div class="form-row">
+                <form class="application-form" id="ngo-application-form">
+                    <div class="form-section">
+                        <h4>Organization Details</h4>
                         <div class="form-group">
-                            <label for="ngo-registration">NPO Registration Number</label>
-                            <input type="text" id="ngo-registration" required>
+                            <label for="ngo-name">Organization Name *</label>
+                            <input type="text" id="ngo-name" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="ngo-registration">NPO Registration Number *</label>
+                                <input type="text" id="ngo-registration" pattern="[0-9]{3}-[0-9]{3}" placeholder="123-456" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="section18a-number">Section 18A Number *</label>
+                                <input type="text" id="section18a-number" placeholder="18A/11/13/1234" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="ngo-founded">Year Founded *</label>
+                                <input type="number" id="ngo-founded" min="1900" max="2025" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="ngo-category">Primary Focus Area *</label>
+                                <select id="ngo-category" required>
+                                    <option value="">Select Category</option>
+                                    <option value="education">Education & Skills Development</option>
+                                    <option value="healthcare">Healthcare & Medical Aid</option>
+                                    <option value="poverty">Poverty Relief & Social Development</option>
+                                    <option value="environment">Environment & Conservation</option>
+                                    <option value="water">Water & Sanitation</option>
+                                    <option value="housing">Housing & Shelter</option>
+                                    <option value="children">Children & Youth Development</option>
+                                    <option value="elderly">Elderly Care</option>
+                                    <option value="disability">Disability Support</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="section18a-number">Section 18A Number</label>
-                            <input type="text" id="section18a-number" required>
+                            <label for="ngo-description">Organization Description & Mission Statement *</label>
+                            <textarea id="ngo-description" rows="4" placeholder="Describe your organization's mission, vision, and primary activities..." required></textarea>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="ngo-category">Primary Focus Area</label>
-                        <select id="ngo-category" required>
-                            <option value="">Select Category</option>
-                            <option value="education">Education</option>
-                            <option value="healthcare">Healthcare</option>
-                            <option value="poverty">Poverty Relief</option>
-                            <option value="environment">Environment</option>
-                            <option value="water">Water & Sanitation</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="ngo-description">Organization Description</label>
-                        <textarea id="ngo-description" rows="4" required></textarea>
-                    </div>
-                    <div class="form-row">
+
+                    <div class="form-section">
+                        <h4>Impact & Operations</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="beneficiaries-served">Number of Beneficiaries Served Annually *</label>
+                                <select id="beneficiaries-served" required>
+                                    <option value="">Select Range</option>
+                                    <option value="1-100">1 - 100 people</option>
+                                    <option value="101-500">101 - 500 people</option>
+                                    <option value="501-1000">501 - 1,000 people</option>
+                                    <option value="1001-5000">1,001 - 5,000 people</option>
+                                    <option value="5000+">5,000+ people</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="annual-budget">Annual Operating Budget *</label>
+                                <select id="annual-budget" required>
+                                    <option value="">Select Range</option>
+                                    <option value="0-100000">R0 - R100,000</option>
+                                    <option value="100000-500000">R100,000 - R500,000</option>
+                                    <option value="500000-1000000">R500,000 - R1,000,000</option>
+                                    <option value="1000000-5000000">R1,000,000 - R5,000,000</option>
+                                    <option value="5000000+">R5,000,000+</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group">
-                            <label for="contact-person">Contact Person</label>
-                            <input type="text" id="contact-person" required>
+                            <label for="provinces-operating">Provinces Where You Operate *</label>
+                            <div class="checkbox-group-provinces">
+                                <label><input type="checkbox" name="provinces" value="gauteng"> Gauteng</label>
+                                <label><input type="checkbox" name="provinces" value="western-cape"> Western Cape</label>
+                                <label><input type="checkbox" name="provinces" value="kwazulu-natal"> KwaZulu-Natal</label>
+                                <label><input type="checkbox" name="provinces" value="eastern-cape"> Eastern Cape</label>
+                                <label><input type="checkbox" name="provinces" value="limpopo"> Limpopo</label>
+                                <label><input type="checkbox" name="provinces" value="mpumalanga"> Mpumalanga</label>
+                                <label><input type="checkbox" name="provinces" value="north-west"> North West</label>
+                                <label><input type="checkbox" name="provinces" value="northern-cape"> Northern Cape</label>
+                                <label><input type="checkbox" name="provinces" value="free-state"> Free State</label>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="contact-email">Contact Email</label>
-                            <input type="email" id="contact-email" required>
+                            <label for="impact-measurement">How do you measure and report impact? *</label>
+                            <textarea id="impact-measurement" rows="3" placeholder="Describe your impact measurement methods, reporting frequency, and key metrics..." required></textarea>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="ngo-address">Physical Address</label>
-                        <textarea id="ngo-address" rows="3" required></textarea>
+
+                    <div class="form-section">
+                        <h4>Contact Information</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contact-person">Primary Contact Person *</label>
+                                <input type="text" id="contact-person" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-title">Title/Position *</label>
+                                <input type="text" id="contact-title" placeholder="CEO, Director, etc." required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contact-email">Contact Email *</label>
+                                <input type="email" id="contact-email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-phone">Contact Phone *</label>
+                                <input type="tel" id="contact-phone" pattern="[0-9+\s\-\(\)]+" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ngo-address">Physical Address *</label>
+                            <textarea id="ngo-address" rows="3" placeholder="Full physical address including postal code" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="website-url">Website URL (Optional)</label>
+                            <input type="url" id="website-url" placeholder="https://www.yourorganization.org">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="bank-details">Banking Details</label>
-                        <textarea id="bank-details" rows="3" placeholder="Bank name, Account holder, Account number, Branch code" required></textarea>
+
+                    <div class="form-section">
+                        <h4>Financial Information</h4>
+                        <div class="form-group">
+                            <label for="bank-details">Banking Details *</label>
+                            <textarea id="bank-details" rows="4" placeholder="Bank name:&#10;Account holder:&#10;Account number:&#10;Branch code:&#10;Account type:" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="funding-sources">Primary Funding Sources *</label>
+                            <div class="checkbox-group-funding">
+                                <label><input type="checkbox" name="funding" value="individual-donations"> Individual Donations</label>
+                                <label><input type="checkbox" name="funding" value="corporate-sponsorship"> Corporate Sponsorship</label>
+                                <label><input type="checkbox" name="funding" value="government-grants"> Government Grants</label>
+                                <label><input type="checkbox" name="funding" value="international-funding"> International Funding</label>
+                                <label><input type="checkbox" name="funding" value="fundraising-events"> Fundraising Events</label>
+                                <label><input type="checkbox" name="funding" value="other"> Other</label>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="file-upload">
-                        <label>Required Documents:</label>
+                        <label>Required Documents *:</label>
                         <div class="file-group">
-                            <label for="npo-certificate">NPO Certificate</label>
+                            <label for="npo-certificate">NPO Registration Certificate</label>
                             <input type="file" id="npo-certificate" accept=".pdf,.jpg,.png" required>
                         </div>
                         <div class="file-group">
@@ -530,13 +616,37 @@
                             <input type="file" id="section18a-certificate" accept=".pdf,.jpg,.png" required>
                         </div>
                         <div class="file-group">
-                            <label for="financial-statements">Latest Financial Statements</label>
+                            <label for="financial-statements">Latest Audited Financial Statements</label>
                             <input type="file" id="financial-statements" accept=".pdf" required>
                         </div>
+                        <div class="file-group">
+                            <label for="constitution">Organization Constitution/Memorandum</label>
+                            <input type="file" id="constitution" accept=".pdf" required>
+                        </div>
+                        <div class="file-group">
+                            <label for="board-resolution">Board Resolution Authorizing Application</label>
+                            <input type="file" id="board-resolution" accept=".pdf" required>
+                        </div>
                     </div>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="terms-ngo" required>
-                        <label for="terms-ngo">I agree to the Terms & Conditions, verification process, and quarterly reporting requirements</label>
+                    
+                    <div class="form-section">
+                        <h4>Verification & Compliance</h4>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="compliance-confirm" required>
+                            <label for="compliance-confirm">I confirm that our organization is compliant with all SARS requirements and maintains proper financial records *</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="audit-agreement" required>
+                            <label for="audit-agreement">I agree to quarterly financial audits and impact assessments by the platform's verification team *</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="reporting-agreement" required>
+                            <label for="reporting-agreement">I agree to provide quarterly impact reports and donor updates *</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="terms-ngo" required>
+                            <label for="terms-ngo">I agree to the Terms & Conditions, Privacy Policy, and platform fee structure *</label>
+                        </div>
                     </div>
                     <button type="submit" class="apply-submit-btn">Submit NGO Application</button>
                 </form>
@@ -613,6 +723,83 @@
         <p>Or email us directly: <a href="mailto:your.email@example.com">your.email@example.com</a></p>
     </section>
 
+    <!-- Authentication Modals -->
+    <div id="auth-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAuthModal()">&times;</span>
+            
+            <!-- Login Form -->
+            <div id="login-form" class="auth-form">
+                <h2>Login to Your Account</h2>
+                <form onsubmit="login(event)">
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="auth-btn">Login</button>
+                    <p class="auth-switch">Don't have an account? <a href="#" onclick="switchAuthForm('register')">Register here</a></p>
+                </form>
+            </div>
+            
+            <!-- Register Form -->
+            <div id="register-form" class="auth-form" style="display: none;">
+                <h2>Create Your Account</h2>
+                <form onsubmit="register(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="reg-first-name">First Name</label>
+                            <input type="text" id="reg-first-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-last-name">Last Name</label>
+                            <input type="text" id="reg-last-name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-email">Email Address</label>
+                        <input type="email" id="reg-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password">Password</label>
+                        <input type="password" id="reg-password" minlength="6" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-confirm-password">Confirm Password</label>
+                        <input type="password" id="reg-confirm-password" minlength="6" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-phone">Phone Number</label>
+                        <input type="tel" id="reg-phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-id-number">SA ID Number</label>
+                        <input type="text" id="reg-id-number" pattern="[0-9]{13}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-annual-income">Annual Income Range</label>
+                        <select id="reg-annual-income" required>
+                            <option value="">Select Income Range</option>
+                            <option value="0-200000">R0 - R200,000</option>
+                            <option value="200000-500000">R200,000 - R500,000</option>
+                            <option value="500000-1000000">R500,000 - R1,000,000</option>
+                            <option value="1000000+">R1,000,000+</option>
+                        </select>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="reg-terms" required>
+                        <label for="reg-terms">I agree to the Terms & Conditions and Privacy Policy</label>
+                    </div>
+                    <button type="submit" class="auth-btn">Create Account</button>
+                    <p class="auth-switch">Already have an account? <a href="#" onclick="switchAuthForm('login')">Login here</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <div class="footer-content">
             <div class="footer-section">
@@ -642,6 +829,266 @@
         // Global variables
         let selectedNGO = '';
         let selectedCategory = '';
+        let currentUser = null;
+
+        // Authentication functions
+        function showAuthModal(formType) {
+            document.getElementById('auth-modal').style.display = 'block';
+            if (formType === 'login') {
+                document.getElementById('login-form').style.display = 'block';
+                document.getElementById('register-form').style.display = 'none';
+            } else {
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('register-form').style.display = 'block';
+            }
+        }
+
+        function closeAuthModal() {
+            document.getElementById('auth-modal').style.display = 'none';
+        }
+
+        function switchAuthForm(formType) {
+            if (formType === 'login') {
+                document.getElementById('login-form').style.display = 'block';
+                document.getElementById('register-form').style.display = 'none';
+            } else {
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('register-form').style.display = 'block';
+            }
+        }
+
+        // Local Storage Functions
+        function saveUser(userData) {
+            localStorage.setItem('ngo_platform_user', JSON.stringify(userData));
+        }
+
+        function getUser() {
+            const userData = localStorage.getItem('ngo_platform_user');
+            return userData ? JSON.parse(userData) : null;
+        }
+
+        function saveUserDonations(donations) {
+            localStorage.setItem(`donations_${currentUser.email}`, JSON.stringify(donations));
+        }
+
+        function getUserDonations() {
+            if (!currentUser) return [];
+            const donations = localStorage.getItem(`donations_${currentUser.email}`);
+            return donations ? JSON.parse(donations) : [];
+        }
+
+        // Authentication handlers
+        function login(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            // Check if user exists in localStorage
+            const allUsers = JSON.parse(localStorage.getItem('ngo_platform_users') || '{}');
+            
+            if (allUsers[email] && allUsers[email].password === password) {
+                currentUser = allUsers[email];
+                saveUser(currentUser);
+                updateUIForLoggedInUser();
+                closeAuthModal();
+                alert('Welcome back! You have successfully logged in.');
+            } else {
+                alert('Invalid email or password. Please try again.');
+            }
+        }
+
+        function register(event) {
+            event.preventDefault();
+            const firstName = document.getElementById('reg-first-name').value;
+            const lastName = document.getElementById('reg-last-name').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+            const confirmPassword = document.getElementById('reg-confirm-password').value;
+            const phone = document.getElementById('reg-phone').value;
+            const idNumber = document.getElementById('reg-id-number').value;
+            const annualIncome = document.getElementById('reg-annual-income').value;
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            // Check if user already exists
+            const allUsers = JSON.parse(localStorage.getItem('ngo_platform_users') || '{}');
+            
+            if (allUsers[email]) {
+                alert('User with this email already exists!');
+                return;
+            }
+
+            // Create new user
+            const newUser = {
+                firstName,
+                lastName,
+                email,
+                password,
+                phone,
+                idNumber,
+                annualIncome,
+                registrationDate: new Date().toISOString(),
+                totalDonated: 0,
+                totalTaxSavings: 0
+            };
+
+            // Save to users list
+            allUsers[email] = newUser;
+            localStorage.setItem('ngo_platform_users', JSON.stringify(allUsers));
+
+            // Set as current user
+            currentUser = newUser;
+            saveUser(currentUser);
+            updateUIForLoggedInUser();
+            closeAuthModal();
+            alert('Account created successfully! Welcome to the platform.');
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('ngo_platform_user');
+            updateUIForLoggedOutUser();
+            showPage('home');
+            alert('You have been logged out successfully.');
+        }
+
+        // UI Update Functions
+        function updateUIForLoggedInUser() {
+            document.getElementById('user-name').textContent = currentUser.firstName;
+            document.getElementById('logged-out-menu').style.display = 'none';
+            document.getElementById('logged-in-menu').style.display = 'block';
+            
+            // Update dashboard
+            document.getElementById('login-required').style.display = 'none';
+            document.getElementById('user-dashboard').style.display = 'block';
+            document.getElementById('dashboard-user-name').textContent = currentUser.firstName;
+            
+            updateDashboardData();
+        }
+
+        function updateUIForLoggedOutUser() {
+            document.getElementById('user-name').textContent = 'Account';
+            document.getElementById('logged-out-menu').style.display = 'block';
+            document.getElementById('logged-in-menu').style.display = 'none';
+            
+            // Hide dashboard
+            document.getElementById('login-required').style.display = 'block';
+            document.getElementById('user-dashboard').style.display = 'none';
+        }
+
+        function updateDashboardData() {
+            if (!currentUser) return;
+            
+            const donations = getUserDonations();
+            const totalDonated = donations.reduce((sum, donation) => sum + donation.amount, 0);
+            const totalTaxSavings = donations.reduce((sum, donation) => sum + donation.taxSavings, 0);
+            const uniqueNGOs = new Set(donations.map(d => d.ngo)).size;
+            
+            document.getElementById('total-donated').textContent = `R${totalDonated.toLocaleString()}`;
+            document.getElementById('total-tax-savings').textContent = `R${totalTaxSavings.toLocaleString()}`;
+            document.getElementById('ngos-supported').textContent = uniqueNGOs;
+            document.getElementById('total-certificates').textContent = donations.length;
+            
+            document.getElementById('summary-total').textContent = `R${totalDonated.toLocaleString()}`;
+            document.getElementById('summary-savings').textContent = `R${totalTaxSavings.toLocaleString()}`;
+            document.getElementById('summary-cost').textContent = `R${(totalDonated - totalTaxSavings).toLocaleString()}`;
+            
+            renderDonationHistory(donations);
+        }
+
+        function renderDonationHistory(donations) {
+            const container = document.getElementById('donations-table');
+            
+            if (donations.length === 0) {
+                container.innerHTML = `
+                    <div class="no-donations">
+                        <i class="fas fa-heart"></i>
+                        <p>No donations yet. <a href="#" onclick="showPage('donate')">Make your first donation</a> to start saving on taxes!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let tableHTML = `
+                <div class="history-table">
+                    <div class="table-header">
+                        <span>Date</span>
+                        <span>NGO</span>
+                        <span>Amount</span>
+                        <span>Tax Saved</span>
+                        <span>Certificate</span>
+                    </div>
+            `;
+            
+            donations.slice(-10).reverse().forEach((donation, index) => {
+                tableHTML += `
+                    <div class="table-row">
+                        <span>${new Date(donation.date).toLocaleDateString()}</span>
+                        <span>${donation.ngo}</span>
+                        <span>R${donation.amount.toLocaleString()}</span>
+                        <span>R${donation.taxSavings.toLocaleString()}</span>
+                        <span><button class="download-btn" onclick="downloadCertificate('${donation.id}')">
+                            <i class="fas fa-download"></i> Download
+                        </button></span>
+                    </div>
+                `;
+            });
+            
+            tableHTML += '</div>';
+            container.innerHTML = tableHTML;
+        }
+
+        // Donation Processing
+        function processDonation(ngoName, amount, frequency) {
+            if (!currentUser) {
+                alert('Please login to make a donation.');
+                showAuthModal('login');
+                return;
+            }
+            
+            const taxRate = calculateTaxRate(currentUser.annualIncome);
+            const taxSavings = amount * taxRate;
+            
+            const donation = {
+                id: 'CERT' + Date.now(),
+                ngo: ngoName,
+                amount: amount,
+                taxSavings: taxSavings,
+                frequency: frequency,
+                date: new Date().toISOString(),
+                certificateDownloaded: false
+            };
+            
+            const donations = getUserDonations();
+            donations.push(donation);
+            saveUserDonations(donations);
+            
+            // Update user totals
+            currentUser.totalDonated += amount;
+            currentUser.totalTaxSavings += taxSavings;
+            
+            const allUsers = JSON.parse(localStorage.getItem('ngo_platform_users') || '{}');
+            allUsers[currentUser.email] = currentUser;
+            localStorage.setItem('ngo_platform_users', JSON.stringify(allUsers));
+            saveUser(currentUser);
+            
+            updateDashboardData();
+            
+            return donation;
+        }
+
+        function calculateTaxRate(incomeRange) {
+            switch(incomeRange) {
+                case '0-200000': return 0.18;
+                case '200000-500000': return 0.26;
+                case '500000-1000000': return 0.31;
+                case '1000000+': return 0.41;
+                default: return 0.31;
+            }
+        }
 
         // Navigation functionality
         function showPage(pageId) {
@@ -657,7 +1104,8 @@
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.classList.remove('active');
             });
-            document.querySelector(`[href="#${pageId}"]`).classList.add('active');
+            const navLink = document.querySelector(`[href="#${pageId}"]`);
+            if (navLink) navLink.classList.add('active');
         }
 
         // NGO filtering
@@ -681,6 +1129,11 @@
 
         // Select NGO for donation
         function selectNGO(ngoName, category) {
+            if (!currentUser) {
+                alert('Please login to make a donation.');
+                showAuthModal('login');
+                return;
+            }
             selectedNGO = ngoName;
             selectedCategory = category;
             document.getElementById('selected-ngo').textContent = ngoName;
@@ -732,7 +1185,11 @@
         // Update donation preview
         function updateDonationPreview() {
             const amount = parseFloat(document.getElementById('donation-amount').value) || 0;
-            const taxSavings = amount * 0.31; // Assuming 31% tax rate for preview
+            let taxRate = 0.31; // Default rate
+            if (currentUser) {
+                taxRate = calculateTaxRate(currentUser.annualIncome);
+            }
+            const taxSavings = amount * taxRate;
             const netCost = amount - taxSavings;
             
             document.getElementById('preview-amount').textContent = `R${amount.toLocaleString()}`;
@@ -742,24 +1199,63 @@
 
         // Download SARS certificate
         function downloadCertificate(certId) {
-            // In a real application, this would generate and download a PDF certificate
+            const donations = getUserDonations();
+            const donation = donations.find(d => d.id === certId);
+            
+            if (!donation) {
+                alert('Certificate not found.');
+                return;
+            }
+            
+            // Mark as downloaded
+            donation.certificateDownloaded = true;
+            saveUserDonations(donations);
+            
             alert(`Downloading Section 18A certificate ${certId}...\\n\\nThis certificate is SARS-compliant and ready for eFiling submission.`);
             
             // Simulate download
+            const certificateContent = `SECTION 18A TAX CERTIFICATE\\n\\nCertificate ID: ${certId}\\nDonor: ${currentUser.firstName} ${currentUser.lastName}\\nEmail: ${currentUser.email}\\nNGO: ${donation.ngo}\\nAmount: R${donation.amount.toLocaleString()}\\nTax Savings: R${donation.taxSavings.toLocaleString()}\\nDate: ${new Date(donation.date).toLocaleDateString()}\\n\\nThis certificate is valid for SARS tax deduction purposes under Section 18A of the Income Tax Act.`;
+            
             const link = document.createElement('a');
-            link.href = 'data:text/plain;charset=utf-8,SARS Section 18A Tax Certificate\\n\\nCertificate ID: ' + certId + '\\nDonor: [Donor Name]\\nNGO: [NGO Name]\\nAmount: [Amount]\\nDate: [Date]\\n\\nThis certificate is valid for SARS tax deduction purposes.';
+            link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(certificateContent);
             link.download = `SARS_Certificate_${certId}.txt`;
             link.click();
         }
 
         // Download annual summary
         function downloadAnnualSummary() {
-            alert('Downloading your 2024 Annual Donation Summary...\\n\\nThis comprehensive report includes all donations, tax savings, and SARS documentation for easy tax filing.');
+            if (!currentUser) {
+                alert('Please login to download your annual summary.');
+                return;
+            }
             
-            // Simulate download
+            const donations = getUserDonations();
+            const currentYear = new Date().getFullYear();
+            const yearDonations = donations.filter(d => new Date(d.date).getFullYear() === currentYear);
+            
+            alert('Downloading your 2025 Annual Donation Summary...\\n\\nThis comprehensive report includes all donations, tax savings, and SARS documentation for easy tax filing.');
+            
+            let summaryContent = `${currentYear} ANNUAL DONATION SUMMARY\\n\\n`;
+            summaryContent += `Donor: ${currentUser.firstName} ${currentUser.lastName}\\n`;
+            summaryContent += `Email: ${currentUser.email}\\n`;
+            summaryContent += `ID Number: ${currentUser.idNumber}\\n\\n`;
+            
+            const totalDonated = yearDonations.reduce((sum, d) => sum + d.amount, 0);
+            const totalTaxSavings = yearDonations.reduce((sum, d) => sum + d.taxSavings, 0);
+            
+            summaryContent += `SUMMARY:\\n`;
+            summaryContent += `Total Donations: R${totalDonated.toLocaleString()}\\n`;
+            summaryContent += `Total Tax Savings: R${totalTaxSavings.toLocaleString()}\\n`;
+            summaryContent += `Net Cost: R${(totalDonated - totalTaxSavings).toLocaleString()}\\n\\n`;
+            
+            summaryContent += `DETAILED BREAKDOWN:\\n`;
+            yearDonations.forEach((donation, index) => {
+                summaryContent += `${index + 1}. ${new Date(donation.date).toLocaleDateString()} - ${donation.ngo} - R${donation.amount.toLocaleString()} (Tax Saved: R${donation.taxSavings.toLocaleString()})\\n`;
+            });
+            
             const link = document.createElement('a');
-            link.href = 'data:text/plain;charset=utf-8,2024 Annual Donation Summary\\n\\nTotal Donations: R15,500\\nTotal Tax Savings: R4,805\\nEffective Cost: R10,695\\n\\nDetailed breakdown and all certificates included.';
-            link.download = '2024_Annual_Donation_Summary.txt';
+            link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(summaryContent);
+            link.download = `${currentYear}_Annual_Donation_Summary.txt`;
             link.click();
         }
 
@@ -782,6 +1278,12 @@
 
         // Event listeners
         document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is already logged in
+            currentUser = getUser();
+            if (currentUser) {
+                updateUIForLoggedInUser();
+            }
+
             // Navigation links
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', (e) => {
@@ -819,9 +1321,39 @@
             if (donationForm) {
                 donationForm.addEventListener('submit', (e) => {
                     e.preventDefault();
-                    alert(`Thank you for your donation to ${selectedNGO}!\\n\\nYour Section 18A certificate has been sent to your email and is ready for SARS eFiling.`);
+                    if (!currentUser) {
+                        alert('Please login to make a donation.');
+                        showAuthModal('login');
+                        return;
+                    }
+                    
+                    const amount = parseFloat(document.getElementById('donation-amount').value);
+                    const frequency = document.getElementById('donation-frequency').value;
+                    
+                    const donation = processDonation(selectedNGO, amount, frequency);
+                    if (donation) {
+                        alert(`Thank you for your donation to ${selectedNGO}!\\n\\nAmount: R${amount.toLocaleString()}\\nTax Savings: R${donation.taxSavings.toLocaleString()}\\n\\nYour Section 18A certificate is ready for download in your dashboard.`);
+                        showPage('dashboard');
+                    }
                 });
             }
+
+            // NGO Application Form
+            const ngoForm = document.getElementById('ngo-application-form');
+            if (ngoForm) {
+                ngoForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    alert('Thank you for your NGO application!\\n\\nYour application has been submitted and will be reviewed by our verification team within 5-7 business days.\\n\\nYou will receive an email confirmation and updates on the verification process.');
+                });
+            }
+
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                const modal = document.getElementById('auth-modal');
+                if (e.target === modal) {
+                    closeAuthModal();
+                }
+            });
 
             // Initialize calculator if on home page
             if (document.getElementById('income')) {
