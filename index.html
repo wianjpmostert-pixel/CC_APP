@@ -1364,38 +1364,6 @@
             console.log('Register form exists:', document.getElementById('register-form-element') ? 'Yes' : 'No');
         }
 
-        // Data Management Functions
-        function showDataSummary() {
-            const data = JSON.parse(localStorage.getItem('ngo_platform_data') || '{}');
-            const totalUsers = Object.keys(data.users || {}).length;
-            const totalDonations = Object.values(data.donations || {}).flat().length;
-            const totalAmount = Object.values(data.donations || {})
-                .flat()
-                .reduce((sum, donation) => sum + (donation.amount || 0), 0);
-            
-            const summary = `📊 PLATFORM DATA SUMMARY\\n\\n` +
-                `👥 Total Users: ${totalUsers}\\n` +
-                `💰 Total Donations: ${totalDonations}\\n` +
-                `🏦 Total Amount: R${totalAmount.toLocaleString()}\\n` +
-                `📅 Last Updated: ${data.metadata?.lastUpdated || 'Never'}\\n\\n` +
-                `💾 Storage: Browser localStorage + JSON file backup`;
-            
-            alert(summary);
-        }
-
-        function clearAllData() {
-            if (confirm('⚠️ WARNING: This will delete ALL user data and donations!\\n\\nThis action cannot be undone. Are you sure?')) {
-                if (confirm('🔴 FINAL CONFIRMATION: Delete all data permanently?')) {
-                    localStorage.clear();
-                    currentUser = null;
-                    updateUIForLoggedOutUser();
-                    showPage('home');
-                    alert('✅ All data cleared successfully!\\n\\nThe page will reload to reset the application.');
-                    window.location.reload();
-                }
-            }
-        }
-
         // Tab switching for application forms
         function switchApplyTab(tabName) {
             // Hide all content
