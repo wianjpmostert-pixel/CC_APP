@@ -1223,3 +1223,64 @@ section h2 i {
         grid-template-columns: 1fr;
     }
 }
+
+/* Data Management Styles */
+.no-donations {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+.no-donations i {
+    font-size: 48px;
+    color: #e53e3e;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.no-donations a {
+    color: #3182ce;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.no-donations a:hover {
+    text-decoration: underline;
+}
+
+.data-actions {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.backup-btn {
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%) !important;
+}
+
+.backup-btn:hover {
+    background: linear-gradient(135deg, #38a169 0%, #2f855a 100%) !important;
+    transform: translateY(-2px);
+}
+
+.data-info {
+    background: #f7fafc;
+    padding: 16px;
+    border-radius: 8px;
+    border-left: 4px solid #3182ce;
+    margin-top: 16px;
+}
+
+.data-info p {
+    margin: 0;
+    color: #4a5568;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.data-info i {
+    color: #3182ce;
+    margin-right: 8px;
+}

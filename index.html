@@ -34,6 +34,23 @@
                     </div>
                 </div>
             </div>
+
+            <div class="dashboard-section">
+                <h3><i class="fas fa-database"></i> Data Management</h3>
+                <div class="data-actions">
+                    <button class="action-btn backup-btn" onclick="downloadUserData()">
+                        <i class="fas fa-download"></i>
+                        Backup Data to JSON
+                    </button>
+                    <button class="action-btn" onclick="showDataStats()">
+                        <i class="fas fa-chart-bar"></i>
+                        View Statistics
+                    </button>
+                </div>
+                <div class="data-info">
+                    <p><i class="fas fa-info-circle"></i> Your data is stored locally and in JSON format. Download your data file to keep a permanent backup.</p>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -857,37 +874,107 @@
             }
         }
 
-        // Local Storage Functions
+        // File-based Data Storage Functions
+        async function loadUserData() {
+            try {
+                const response = await fetch('./users.json');
+                if (response.ok) {
+                    return await response.json();
+                }
+            } catch (error) {
+                console.log('Creating new user data file...');
+            }
+            
+            // Return default structure if file doesn't exist
+            return {
+                users: {},
+                donations: {},
+                metadata: {
+                    created: new Date().toISOString(),
+                    version: "1.0",
+                    totalUsers: 0,
+                    totalDonations: 0
+                }
+            };
+        }
+
+        async function saveUserData(data) {
+            // Since we can't write files directly from the browser, we'll use localStorage as a fallback
+            // and provide download functionality for the JSON data
+            localStorage.setItem('ngo_platform_data', JSON.stringify(data));
+            
+            // Also provide a way to download the updated JSON
+            console.log('User data saved to localStorage. Use downloadUserData() to get the JSON file.');
+        }
+
+        function downloadUserData() {
+            const data = localStorage.getItem('ngo_platform_data');
+            if (data) {
+                const blob = new Blob([data], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'users.json';
+                link.click();
+                URL.revokeObjectURL(url);
+                
+                alert('User data downloaded as users.json\n\nTo persist data, replace the users.json file in your project folder with the downloaded file.');
+            }
+        }
+
         function saveUser(userData) {
-            localStorage.setItem('ngo_platform_user', JSON.stringify(userData));
+            localStorage.setItem('ngo_platform_current_user', JSON.stringify(userData));
         }
 
         function getUser() {
-            const userData = localStorage.getItem('ngo_platform_user');
+            const userData = localStorage.getItem('ngo_platform_current_user');
             return userData ? JSON.parse(userData) : null;
         }
 
-        function saveUserDonations(donations) {
-            localStorage.setItem(`donations_${currentUser.email}`, JSON.stringify(donations));
+        async function getAllUsers() {
+            const data = localStorage.getItem('ngo_platform_data');
+            if (data) {
+                return JSON.parse(data);
+            }
+            return await loadUserData();
+        }
+
+        async function saveAllUsers(userData) {
+            await saveUserData(userData);
         }
 
         function getUserDonations() {
             if (!currentUser) return [];
-            const donations = localStorage.getItem(`donations_${currentUser.email}`);
-            return donations ? JSON.parse(donations) : [];
+            const data = localStorage.getItem('ngo_platform_data');
+            if (data) {
+                const parsed = JSON.parse(data);
+                return parsed.donations[currentUser.email] || [];
+            }
+            return [];
+        }
+
+        async function saveUserDonations(donations) {
+            if (!currentUser) return;
+            
+            const allData = await getAllUsers();
+            if (!allData.donations) allData.donations = {};
+            allData.donations[currentUser.email] = donations;
+            allData.metadata.totalDonations = Object.values(allData.donations).flat().length;
+            
+            await saveAllUsers(allData);
         }
 
         // Authentication handlers
-        function login(event) {
+        async function login(event) {
             event.preventDefault();
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
 
-            // Check if user exists in localStorage
-            const allUsers = JSON.parse(localStorage.getItem('ngo_platform_users') || '{}');
+            // Check if user exists in JSON data
+            const allData = await getAllUsers();
             
-            if (allUsers[email] && allUsers[email].password === password) {
-                currentUser = allUsers[email];
+            if (allData.users[email] && allData.users[email].password === password) {
+                currentUser = allData.users[email];
                 saveUser(currentUser);
                 updateUIForLoggedInUser();
                 closeAuthModal();
@@ -897,7 +984,7 @@
             }
         }
 
-        function register(event) {
+        async function register(event) {
             event.preventDefault();
             const firstName = document.getElementById('reg-first-name').value;
             const lastName = document.getElementById('reg-last-name').value;
@@ -914,9 +1001,9 @@
             }
 
             // Check if user already exists
-            const allUsers = JSON.parse(localStorage.getItem('ngo_platform_users') || '{}');
+            const allData = await getAllUsers();
             
-            if (allUsers[email]) {
+            if (allData.users[email]) {
                 alert('User with this email already exists!');
                 return;
             }
@@ -935,21 +1022,24 @@
                 totalTaxSavings: 0
             };
 
-            // Save to users list
-            allUsers[email] = newUser;
-            localStorage.setItem('ngo_platform_users', JSON.stringify(allUsers));
+            // Save to users data
+            allData.users[email] = newUser;
+            allData.metadata.totalUsers = Object.keys(allData.users).length;
+            allData.metadata.lastUpdated = new Date().toISOString();
+            
+            await saveAllUsers(allData);
 
             // Set as current user
             currentUser = newUser;
             saveUser(currentUser);
             updateUIForLoggedInUser();
             closeAuthModal();
-            alert('Account created successfully! Welcome to the platform.');
+            alert('Account created successfully! Welcome to the platform.\n\nNote: Use downloadUserData() in browser console to backup your data to users.json file.');
         }
 
         function logout() {
             currentUser = null;
-            localStorage.removeItem('ngo_platform_user');
+            localStorage.removeItem('ngo_platform_current_user');
             updateUIForLoggedOutUser();
             showPage('home');
             alert('You have been logged out successfully.');
@@ -1042,7 +1132,7 @@
         }
 
         // Donation Processing
-        function processDonation(ngoName, amount, frequency) {
+        async function processDonation(ngoName, amount, frequency) {
             if (!currentUser) {
                 alert('Please login to make a donation.');
                 showAuthModal('login');
@@ -1064,15 +1154,15 @@
             
             const donations = getUserDonations();
             donations.push(donation);
-            saveUserDonations(donations);
+            await saveUserDonations(donations);
             
             // Update user totals
             currentUser.totalDonated += amount;
             currentUser.totalTaxSavings += taxSavings;
             
-            const allUsers = JSON.parse(localStorage.getItem('ngo_platform_users') || '{}');
-            allUsers[currentUser.email] = currentUser;
-            localStorage.setItem('ngo_platform_users', JSON.stringify(allUsers));
+            const allData = await getAllUsers();
+            allData.users[currentUser.email] = currentUser;
+            await saveAllUsers(allData);
             saveUser(currentUser);
             
             updateDashboardData();
@@ -1198,7 +1288,7 @@
         }
 
         // Download SARS certificate
-        function downloadCertificate(certId) {
+        async function downloadCertificate(certId) {
             const donations = getUserDonations();
             const donation = donations.find(d => d.id === certId);
             
@@ -1209,7 +1299,7 @@
             
             // Mark as downloaded
             donation.certificateDownloaded = true;
-            saveUserDonations(donations);
+            await saveUserDonations(donations);
             
             alert(`Downloading Section 18A certificate ${certId}...\\n\\nThis certificate is SARS-compliant and ready for eFiling submission.`);
             
@@ -1259,6 +1349,35 @@
             link.click();
         }
 
+        // Data Statistics
+        async function showDataStats() {
+            if (!currentUser) {
+                alert('Please login to view statistics.');
+                return;
+            }
+            
+            const allData = await getAllUsers();
+            const userDonations = getUserDonations();
+            const totalUsers = Object.keys(allData.users).length;
+            const totalDonations = Object.values(allData.donations).flat().length;
+            const userRank = Object.values(allData.users)
+                .sort((a, b) => b.totalDonated - a.totalDonated)
+                .findIndex(user => user.email === currentUser.email) + 1;
+            
+            const stats = `PLATFORM STATISTICS\\n\\n` +
+                `Total Registered Users: ${totalUsers}\\n` +
+                `Total Donations Made: ${totalDonations}\\n` +
+                `Your Donation Rank: #${userRank} of ${totalUsers}\\n\\n` +
+                `YOUR PERSONAL STATS:\\n` +
+                `Registration Date: ${new Date(currentUser.registrationDate).toLocaleDateString()}\\n` +
+                `Total Donations: ${userDonations.length}\\n` +
+                `Total Amount Donated: R${currentUser.totalDonated.toLocaleString()}\\n` +
+                `Total Tax Savings: R${currentUser.totalTaxSavings.toLocaleString()}\\n` +
+                `Average Donation: R${userDonations.length > 0 ? (currentUser.totalDonated / userDonations.length).toLocaleString() : '0'}`;
+            
+            alert(stats);
+        }
+
         // Tab switching for application forms
         function switchApplyTab(tabName) {
             // Hide all content
@@ -1277,7 +1396,19 @@
         }
 
         // Event listeners
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Initialize data from JSON file
+            try {
+                const data = await loadUserData();
+                if (data && Object.keys(data.users).length > 0) {
+                    // Data loaded successfully from JSON file
+                    console.log('User data loaded from users.json');
+                    localStorage.setItem('ngo_platform_data', JSON.stringify(data));
+                }
+            } catch (error) {
+                console.log('Using localStorage data or creating new data structure');
+            }
+
             // Check if user is already logged in
             currentUser = getUser();
             if (currentUser) {
