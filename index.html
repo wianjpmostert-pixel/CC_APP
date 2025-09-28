@@ -870,28 +870,10 @@
         }
 
         async function saveUserData(data) {
-            // Since we can't write files directly from the browser, we'll use localStorage as a fallback
-            // and provide download functionality for the JSON data
             localStorage.setItem('ngo_platform_data', JSON.stringify(data));
-            
-            // Also provide a way to download the updated JSON
-            console.log('User data saved to localStorage. Use downloadUserData() to get the JSON file.');
         }
 
-        function downloadUserData() {
-            const data = localStorage.getItem('ngo_platform_data');
-            if (data) {
-                const blob = new Blob([data], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = 'users.json';
-                link.click();
-                URL.revokeObjectURL(url);
-                
-                alert('User data downloaded as users.json\n\nTo persist data, replace the users.json file in your project folder with the downloaded file.');
-            }
-        }
+        /* Removed downloadUserData function that was causing popup issues */
 
         function saveUser(userData) {
             localStorage.setItem('ngo_platform_current_user', JSON.stringify(userData));
@@ -1330,35 +1312,6 @@
             link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(summaryContent);
             link.download = `${currentYear}_Annual_Donation_Summary.txt`;
             link.click();
-        }
-
-        // Data Statistics
-        async function showDataStats() {
-            if (!currentUser) {
-                alert('Please login to view statistics.');
-                return;
-            }
-            
-            const allData = await getAllUsers();
-            const userDonations = getUserDonations();
-            const totalUsers = Object.keys(allData.users).length;
-            const totalDonations = Object.values(allData.donations).flat().length;
-            const userRank = Object.values(allData.users)
-                .sort((a, b) => b.totalDonated - a.totalDonated)
-                .findIndex(user => user.email === currentUser.email) + 1;
-            
-            const stats = `PLATFORM STATISTICS\\n\\n` +
-                `Total Registered Users: ${totalUsers}\\n` +
-                `Total Donations Made: ${totalDonations}\\n` +
-                `Your Donation Rank: #${userRank} of ${totalUsers}\\n\\n` +
-                `YOUR PERSONAL STATS:\\n` +
-                `Registration Date: ${new Date(currentUser.registrationDate).toLocaleDateString()}\\n` +
-                `Total Donations: ${userDonations.length}\\n` +
-                `Total Amount Donated: R${currentUser.totalDonated.toLocaleString()}\\n` +
-                `Total Tax Savings: R${currentUser.totalTaxSavings.toLocaleString()}\\n` +
-                `Average Donation: R${userDonations.length > 0 ? (currentUser.totalDonated / userDonations.length).toLocaleString() : '0'}`;
-            
-            alert(stats);
         }
 
         // Debug functions (can be called from browser console)
