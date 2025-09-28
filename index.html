@@ -4,28 +4,195 @@
     <meta charset="UTF-8">
     <title>NGO Tax Reduction Demo</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <header>
-        <h1>NGO Tax Reduction Platform</h1>
-        <p>Helping you make a difference and save on taxes by donating to trusted NGOs.</p>
+        <div class="hero-content">
+            <h1><i class="fas fa-heart"></i> NGO Tax Reduction Platform</h1>
+            <p>Helping you make a difference and save on taxes by donating to trusted NGOs.</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <i class="fas fa-users"></i>
+                    <span class="stat-number">15,000+</span>
+                    <span class="stat-label">Donors Helped</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-dollar-sign"></i>
+                    <span class="stat-number">$2.3M</span>
+                    <span class="stat-label">Tax Savings</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-hand-holding-heart"></i>
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">NGOs Supported</span>
+                </div>
+            </div>
+        </div>
     </header>
 
+    <!-- Tax Calculator Section -->
+    <section id="tax-calculator">
+        <h2><i class="fas fa-calculator"></i> Tax Savings Calculator</h2>
+        <p>See how much you can save on taxes while helping others!</p>
+        <div class="calculator-container">
+            <div class="input-group">
+                <label for="income">Annual Income ($)</label>
+                <input type="number" id="income" placeholder="75000" oninput="calculateSavings()">
+            </div>
+            <div class="input-group">
+                <label for="donation">Donation Amount ($)</label>
+                <input type="number" id="donation" placeholder="1000" oninput="calculateSavings()">
+            </div>
+            <div class="results">
+                <div class="result-item">
+                    <span class="result-label">Tax Bracket:</span>
+                    <span id="tax-bracket">22%</span>
+                </div>
+                <div class="result-item savings">
+                    <span class="result-label">Your Tax Savings:</span>
+                    <span id="tax-savings">$220</span>
+                </div>
+                <div class="result-item impact">
+                    <span class="result-label">Net Cost to You:</span>
+                    <span id="net-cost">$780</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="tax-benefits">
-        <h2>How Donations Reduce Your Taxes</h2>
+        <h2><i class="fas fa-chart-line"></i> How Donations Reduce Your Taxes</h2>
         <p>
             By donating to registered NGOs, you may be eligible for significant tax reductions. 
             Our platform connects you with vetted causes so your contribution has maximum impact—on the world and your finances.
         </p>
+        
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <i class="fas fa-percentage"></i>
+                <h3>Tax Deductions</h3>
+                <p>Reduce your taxable income dollar-for-dollar with charitable donations</p>
+            </div>
+            <div class="benefit-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>IRS Approved</h3>
+                <p>All NGOs are verified 501(c)(3) organizations for maximum tax benefits</p>
+            </div>
+            <div class="benefit-card">
+                <i class="fas fa-receipt"></i>
+                <h3>Easy Documentation</h3>
+                <p>Automatic tax receipts and documentation for your records</p>
+            </div>
+        </div>
     </section>
 
     <section id="causes">
-        <h2>Featured Causes</h2>
-        <ul>
-            <li><strong>Education for All</strong> — Support scholarships for underprivileged children.</li>
-            <li><strong>Clean Water Initiative</strong> — Fund the construction of wells in rural areas.</li>
-            <li><strong>Healthcare Access</strong> — Help provide basic medical care to those in need.</li>
-        </ul>
+        <h2><i class="fas fa-globe-americas"></i> Featured Causes & Impact</h2>
+        <div class="causes-grid">
+            <div class="cause-card">
+                <div class="cause-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3>Education for All</h3>
+                <p>Support scholarships for underprivileged children and help build a brighter future.</p>
+                <div class="impact-stats">
+                    <div class="impact-item">
+                        <strong>2,340</strong> children educated
+                    </div>
+                    <div class="impact-item">
+                        <strong>85%</strong> graduation rate
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 75%;"></div>
+                </div>
+                <small>$500 can sponsor one child for a full year</small>
+            </div>
+
+            <div class="cause-card">
+                <div class="cause-icon">
+                    <i class="fas fa-tint"></i>
+                </div>
+                <h3>Clean Water Initiative</h3>
+                <p>Fund the construction of wells and water purification systems in rural areas.</p>
+                <div class="impact-stats">
+                    <div class="impact-item">
+                        <strong>45,000</strong> people served
+                    </div>
+                    <div class="impact-item">
+                        <strong>127</strong> wells built
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 62%;"></div>
+                </div>
+                <small>$250 provides clean water for 10 families</small>
+            </div>
+
+            <div class="cause-card">
+                <div class="cause-icon">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <h3>Healthcare Access</h3>
+                <p>Help provide basic medical care, vaccines, and health education to those in need.</p>
+                <div class="impact-stats">
+                    <div class="impact-item">
+                        <strong>18,500</strong> patients treated
+                    </div>
+                    <div class="impact-item">
+                        <strong>95%</strong> vaccination rate
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 88%;"></div>
+                </div>
+                <small>$100 can provide medical care for 5 people</small>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Visualization -->
+    <section id="impact-visual">
+        <h2><i class="fas fa-chart-pie"></i> Your Donation Impact</h2>
+        <div class="impact-container">
+            <div class="donation-breakdown">
+                <h3>Where Your $1000 Donation Goes:</h3>
+                <div class="breakdown-item">
+                    <div class="breakdown-bar education" style="width: 40%;"></div>
+                    <span>Education Programs (40%) - $400</span>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-bar water" style="width: 35%;"></div>
+                    <span>Clean Water Projects (35%) - $350</span>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-bar healthcare" style="width: 20%;"></div>
+                    <span>Healthcare Initiatives (20%) - $200</span>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-bar admin" style="width: 5%;"></div>
+                    <span>Administrative Costs (5%) - $50</span>
+                </div>
+            </div>
+            <div class="impact-numbers">
+                <div class="impact-stat">
+                    <i class="fas fa-child"></i>
+                    <strong>8 children</strong>
+                    <span>receive education for 6 months</span>
+                </div>
+                <div class="impact-stat">
+                    <i class="fas fa-home"></i>
+                    <strong>40 families</strong>
+                    <span>get access to clean water</span>
+                </div>
+                <div class="impact-stat">
+                    <i class="fas fa-stethoscope"></i>
+                    <strong>50 people</strong>
+                    <span>receive medical treatment</span>
+                </div>
+            </div>
+        </div>
     </section>
 
     <section id="contact">
@@ -46,7 +213,59 @@
     </section>
 
     <footer>
-        <p>&copy; 2025 NGO Tax Reduction Demo</p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3><i class="fas fa-heart"></i> Make a Difference Today</h3>
+                <p>Every donation counts. Start saving on taxes while changing lives.</p>
+            </div>
+            <div class="footer-section">
+                <h3><i class="fas fa-phone"></i> Contact</h3>
+                <p>Email: <a href="mailto:wianjpmostert@gmail.com">wianjpmostert@gmail.com</a></p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+            <div class="footer-section">
+                <h3><i class="fas fa-share-alt"></i> Follow Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 NGO Tax Reduction Platform | Making giving rewarding</p>
+        </div>
     </footer>
+
+    <script>
+        function calculateSavings() {
+            const income = parseFloat(document.getElementById('income').value) || 0;
+            const donation = parseFloat(document.getElementById('donation').value) || 0;
+            
+            // Simplified tax brackets for demonstration
+            let taxRate = 0;
+            if (income <= 10275) taxRate = 0.10;
+            else if (income <= 41775) taxRate = 0.12;
+            else if (income <= 89450) taxRate = 0.22;
+            else if (income <= 190750) taxRate = 0.24;
+            else if (income <= 364200) taxRate = 0.32;
+            else if (income <= 462500) taxRate = 0.35;
+            else taxRate = 0.37;
+            
+            const taxSavings = donation * taxRate;
+            const netCost = donation - taxSavings;
+            
+            document.getElementById('tax-bracket').textContent = `${(taxRate * 100).toFixed(0)}%`;
+            document.getElementById('tax-savings').textContent = `$${taxSavings.toLocaleString()}`;
+            document.getElementById('net-cost').textContent = `$${netCost.toLocaleString()}`;
+        }
+        
+        // Initialize with default values
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('income').value = '75000';
+            document.getElementById('donation').value = '1000';
+            calculateSavings();
+        });
+    </script>
 </body>
 </html>
