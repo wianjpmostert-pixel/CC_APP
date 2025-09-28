@@ -7,12 +7,36 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <i class="fas fa-heart"></i> SARSsePUSH
-            </div>
+        <meta charset="UTF-8">
+        <title>SARSsePUSH</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <style>
+            body {
+                background: url('Photos/SA.jpg') no-repeat center center fixed;
+                background-size: cover;
+            }
+            .nav-logo {
+                position: relative;
+                display: flex;
+                align-items: center;
+            }
+            .nav-logo-img {
+                position: absolute;
+                left: -56px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 48px;
+                height: 48px;
+                opacity: 0.5;
+                z-index: 0;
+            }
+            .nav-logo i, .nav-logo span, .nav-logo-text {
+                position: relative;
+                z-index: 1;
+            }
+        </style>
+    </head>
             <div class="nav-menu">
                 <a href="#home" class="nav-link active">Home</a>
                 <a href="#donate" class="nav-link">Donate</a>
@@ -79,7 +103,8 @@
             <div class="results">
                 <div class="result-item">
                     <span class="result-label">Your Tax Rate:</span>
-                    <span id="tax-bracket">31%</span>
+                            <img src="Photos/SARS-South-African-Revenue-Service-Torn-Bank-Note-SARS-Logo.jpg" alt="SARS Logo" class="nav-logo-img">
+                            <i class="fas fa-heart"></i> <span class="nav-logo-text">SARSsePUSH</span>
                 </div>
                 <div class="result-item">
                     <span class="result-label">Maximum Deductible:</span>
