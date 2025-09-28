@@ -9,23 +9,23 @@
 <body>
     <header>
         <div class="hero-content">
-            <h1><i class="fas fa-heart"></i> NGO Tax Reduction Platform</h1>
-            <p>Helping you make a difference and save on taxes by donating to trusted NGOs.</p>
+            <h1><i class="fas fa-heart"></i> South African NGO Tax Relief Platform</h1>
+            <p>Helping South Africans make a difference and save on taxes by donating to verified NGOs. SARS approved donations with maximum tax benefits.</p>
             <div class="hero-stats">
                 <div class="stat-item">
                     <i class="fas fa-users"></i>
-                    <span class="stat-number">15,000+</span>
-                    <span class="stat-label">Donors Helped</span>
+                    <span class="stat-number">8,500+</span>
+                    <span class="stat-label">SA Donors Helped</span>
                 </div>
                 <div class="stat-item">
                     <i class="fas fa-dollar-sign"></i>
-                    <span class="stat-number">$2.3M</span>
+                    <span class="stat-number">R18.7M</span>
                     <span class="stat-label">Tax Savings</span>
                 </div>
                 <div class="stat-item">
-                    <i class="fas fa-hand-holding-heart"></i>
-                    <span class="stat-number">500+</span>
-                    <span class="stat-label">NGOs Supported</span>
+                    <i class="fas fa-shield-check"></i>
+                    <span class="stat-number">250+</span>
+                    <span class="stat-label">Verified NGOs</span>
                 </div>
             </div>
         </div>
@@ -33,101 +33,128 @@
 
     <!-- Tax Calculator Section -->
     <section id="tax-calculator">
-        <h2><i class="fas fa-calculator"></i> Tax Savings Calculator</h2>
-        <p>See how much you can save on taxes while helping others!</p>
+        <h2><i class="fas fa-calculator"></i> SA Tax Savings Calculator</h2>
+        <p>See how much you can save on taxes while helping South Africans in need! Based on current SARS tax tables.</p>
         <div class="calculator-container">
             <div class="input-group">
-                <label for="income">Annual Income ($)</label>
-                <input type="number" id="income" placeholder="75000" oninput="calculateSavings()">
+                <label for="income">Annual Taxable Income (R)</label>
+                <input type="number" id="income" placeholder="500000" oninput="calculateSavings()">
             </div>
             <div class="input-group">
-                <label for="donation">Donation Amount ($)</label>
-                <input type="number" id="donation" placeholder="1000" oninput="calculateSavings()">
+                <label for="donation">Donation Amount (R)</label>
+                <input type="number" id="donation" placeholder="10000" oninput="calculateSavings()">
             </div>
             <div class="results">
                 <div class="result-item">
-                    <span class="result-label">Tax Bracket:</span>
-                    <span id="tax-bracket">22%</span>
+                    <span class="result-label">Your Tax Rate:</span>
+                    <span id="tax-bracket">31%</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Maximum Deductible:</span>
+                    <span id="max-deductible">R10,000</span>
                 </div>
                 <div class="result-item savings">
                     <span class="result-label">Your Tax Savings:</span>
-                    <span id="tax-savings">$220</span>
+                    <span id="tax-savings">R3,100</span>
                 </div>
                 <div class="result-item impact">
                     <span class="result-label">Net Cost to You:</span>
-                    <span id="net-cost">$780</span>
+                    <span id="net-cost">R6,900</span>
                 </div>
+            </div>
+            <div class="tax-info">
+                <p><strong>SARS Guidelines:</strong> You can deduct up to 10% of your taxable income (max R100,000) for donations to SARS-approved Section 18A organizations.</p>
             </div>
         </div>
     </section>
 
     <section id="tax-benefits">
-        <h2><i class="fas fa-chart-line"></i> How Donations Reduce Your Taxes</h2>
+        <h2><i class="fas fa-chart-line"></i> Why Choose Our Verified NGOs</h2>
         <p>
-            By donating to registered NGOs, you may be eligible for significant tax reductions. 
-            Our platform connects you with vetted causes so your contribution has maximum impact—on the world and your finances.
+            We ensure every Rand donated makes a real impact. Our rigorous verification process guarantees your donations go to legitimate, SARS-approved Section 18A organizations, maximizing both your tax benefits and social impact across South Africa.
         </p>
         
         <div class="benefits-grid">
             <div class="benefit-card">
-                <i class="fas fa-percentage"></i>
-                <h3>Tax Deductions</h3>
-                <p>Reduce your taxable income dollar-for-dollar with charitable donations</p>
+                <i class="fas fa-search-plus"></i>
+                <h3>Rigorous NGO Verification</h3>
+                <p>We conduct quarterly audits, site visits, and impact assessments to ensure every NGO meets our strict standards for transparency and effectiveness.</p>
+            </div>
+            <div class="benefit-card">
+                <i class="fas fa-certificate"></i>
+                <h3>SARS Section 18A Approved</h3>
+                <p>All NGOs are verified Section 18A organizations, ensuring maximum tax deductions up to 10% of your taxable income (max R100,000 annually).</p>
+            </div>
+            <div class="benefit-card">
+                <i class="fas fa-chart-bar"></i>
+                <h3>Impact Tracking & Reports</h3>
+                <p>Receive detailed quarterly reports showing exactly how your donations are being used, with photos and stories from beneficiaries.</p>
             </div>
             <div class="benefit-card">
                 <i class="fas fa-shield-alt"></i>
-                <h3>IRS Approved</h3>
-                <p>All NGOs are verified 501(c)(3) organizations for maximum tax benefits</p>
+                <h3>Fraud Protection</h3>
+                <p>Our verification team includes former SARS auditors and NGO sector experts who ensure your money reaches those who need it most.</p>
             </div>
             <div class="benefit-card">
                 <i class="fas fa-receipt"></i>
-                <h3>Easy Documentation</h3>
-                <p>Automatic tax receipts and documentation for your records</p>
+                <h3>Instant Tax Certificates</h3>
+                <p>Receive your Section 18A tax certificate immediately via email, ready for your SARS eFiling submission.</p>
+            </div>
+            <div class="benefit-card">
+                <i class="fas fa-map-marked-alt"></i>
+                <h3>Local Focus</h3>
+                <p>Support communities across all 9 provinces of South Africa, from rural Eastern Cape to urban Gauteng townships.</p>
             </div>
         </div>
     </section>
 
     <section id="causes">
-        <h2><i class="fas fa-globe-americas"></i> Featured Causes & Impact</h2>
+        <h2><i class="fas fa-flag"></i> Featured South African Causes & Impact</h2>
         <div class="causes-grid">
             <div class="cause-card">
                 <div class="cause-icon">
                     <i class="fas fa-graduation-cap"></i>
                 </div>
-                <h3>Education for All</h3>
-                <p>Support scholarships for underprivileged children and help build a brighter future.</p>
+                <h3>Education in Townships</h3>
+                <p>Support quality education in underserved communities across Gauteng, KwaZulu-Natal, and Eastern Cape townships.</p>
                 <div class="impact-stats">
                     <div class="impact-item">
-                        <strong>2,340</strong> children educated
+                        <strong>12,400</strong> learners supported
                     </div>
                     <div class="impact-item">
-                        <strong>85%</strong> graduation rate
+                        <strong>89%</strong> pass rate achieved
                     </div>
                 </div>
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 75%;"></div>
+                    <div class="progress-fill" style="width: 78%;"></div>
                 </div>
-                <small>$500 can sponsor one child for a full year</small>
+                <small>R500 sponsors one child's education for 3 months</small>
+                <div class="verification-badge">
+                    <i class="fas fa-certificate"></i> SARS Verified • Quarterly Audited
+                </div>
             </div>
 
             <div class="cause-card">
                 <div class="cause-icon">
                     <i class="fas fa-tint"></i>
                 </div>
-                <h3>Clean Water Initiative</h3>
-                <p>Fund the construction of wells and water purification systems in rural areas.</p>
+                <h3>Rural Water Access</h3>
+                <p>Provide clean water infrastructure to rural communities in Limpopo, Free State, and Northern Cape.</p>
                 <div class="impact-stats">
                     <div class="impact-item">
-                        <strong>45,000</strong> people served
+                        <strong>28,500</strong> people served
                     </div>
                     <div class="impact-item">
-                        <strong>127</strong> wells built
+                        <strong>85</strong> boreholes drilled
                     </div>
                 </div>
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 62%;"></div>
+                    <div class="progress-fill" style="width: 65%;"></div>
                 </div>
-                <small>$250 provides clean water for 10 families</small>
+                <small>R2,500 provides clean water for 50 families</small>
+                <div class="verification-badge">
+                    <i class="fas fa-certificate"></i> SARS Verified • Site Inspected
+                </div>
             </div>
 
             <div class="cause-card">
@@ -135,61 +162,73 @@
                     <i class="fas fa-heartbeat"></i>
                 </div>
                 <h3>Healthcare Access</h3>
-                <p>Help provide basic medical care, vaccines, and health education to those in need.</p>
+                <p>Mobile clinics and primary healthcare services for remote communities across all provinces.</p>
                 <div class="impact-stats">
                     <div class="impact-item">
-                        <strong>18,500</strong> patients treated
+                        <strong>45,200</strong> patients treated
                     </div>
                     <div class="impact-item">
-                        <strong>95%</strong> vaccination rate
+                        <strong>92%</strong> vaccination coverage
                     </div>
                 </div>
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 88%;"></div>
+                    <div class="progress-fill" style="width: 84%;"></div>
                 </div>
-                <small>$100 can provide medical care for 5 people</small>
+                <small>R300 provides medical care for 10 people</small>
+                <div class="verification-badge">
+                    <i class="fas fa-certificate"></i> SARS Verified • Impact Tracked
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Impact Visualization -->
     <section id="impact-visual">
-        <h2><i class="fas fa-chart-pie"></i> Your Donation Impact</h2>
+        <h2><i class="fas fa-chart-pie"></i> Your Donation Impact in South Africa</h2>
         <div class="impact-container">
             <div class="donation-breakdown">
-                <h3>Where Your $1000 Donation Goes:</h3>
+                <h3>Where Your R10,000 Donation Goes:</h3>
                 <div class="breakdown-item">
-                    <div class="breakdown-bar education" style="width: 40%;"></div>
-                    <span>Education Programs (40%) - $400</span>
+                    <div class="breakdown-bar education" style="width: 45%;"></div>
+                    <span>Township Education (45%) - R4,500</span>
                 </div>
                 <div class="breakdown-item">
-                    <div class="breakdown-bar water" style="width: 35%;"></div>
-                    <span>Clean Water Projects (35%) - $350</span>
+                    <div class="breakdown-bar water" style="width: 30%;"></div>
+                    <span>Rural Water Access (30%) - R3,000</span>
                 </div>
                 <div class="breakdown-item">
                     <div class="breakdown-bar healthcare" style="width: 20%;"></div>
-                    <span>Healthcare Initiatives (20%) - $200</span>
+                    <span>Primary Healthcare (20%) - R2,000</span>
                 </div>
                 <div class="breakdown-item">
                     <div class="breakdown-bar admin" style="width: 5%;"></div>
-                    <span>Administrative Costs (5%) - $50</span>
+                    <span>Admin & Verification (5%) - R500</span>
+                </div>
+                <div class="verification-note">
+                    <i class="fas fa-shield-check"></i>
+                    <span>Every NGO undergoes monthly financial audits</span>
                 </div>
             </div>
             <div class="impact-numbers">
                 <div class="impact-stat">
                     <i class="fas fa-child"></i>
-                    <strong>8 children</strong>
-                    <span>receive education for 6 months</span>
+                    <strong>18 learners</strong>
+                    <span>receive quality education for 3 months</span>
                 </div>
                 <div class="impact-stat">
                     <i class="fas fa-home"></i>
-                    <strong>40 families</strong>
+                    <strong>120 families</strong>
                     <span>get access to clean water</span>
                 </div>
                 <div class="impact-stat">
                     <i class="fas fa-stethoscope"></i>
-                    <strong>50 people</strong>
-                    <span>receive medical treatment</span>
+                    <strong>200 people</strong>
+                    <span>receive primary healthcare</span>
+                </div>
+                <div class="tax-benefit-highlight">
+                    <i class="fas fa-calculator"></i>
+                    <strong>Save R3,100 on taxes</strong>
+                    <span>Your net contribution: only R6,900</span>
                 </div>
             </div>
         </div>
@@ -242,28 +281,47 @@
             const income = parseFloat(document.getElementById('income').value) || 0;
             const donation = parseFloat(document.getElementById('donation').value) || 0;
             
-            // Simplified tax brackets for demonstration
+            // South African tax brackets for 2024/2025 tax year
             let taxRate = 0;
-            if (income <= 10275) taxRate = 0.10;
-            else if (income <= 41775) taxRate = 0.12;
-            else if (income <= 89450) taxRate = 0.22;
-            else if (income <= 190750) taxRate = 0.24;
-            else if (income <= 364200) taxRate = 0.32;
-            else if (income <= 462500) taxRate = 0.35;
-            else taxRate = 0.37;
+            if (income <= 237100) taxRate = 0.18;
+            else if (income <= 370500) taxRate = 0.26;
+            else if (income <= 512800) taxRate = 0.31;
+            else if (income <= 673000) taxRate = 0.36;
+            else if (income <= 857900) taxRate = 0.39;
+            else if (income <= 1817000) taxRate = 0.41;
+            else taxRate = 0.45;
             
-            const taxSavings = donation * taxRate;
+            // Section 18A deduction limits: 10% of taxable income, max R100,000
+            const maxDeduction = Math.min(income * 0.10, 100000);
+            const actualDeduction = Math.min(donation, maxDeduction);
+            const taxSavings = actualDeduction * taxRate;
             const netCost = donation - taxSavings;
             
+            // Format South African Rand
+            const formatter = new Intl.NumberFormat('en-ZA', {
+                style: 'currency',
+                currency: 'ZAR',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            });
+            
             document.getElementById('tax-bracket').textContent = `${(taxRate * 100).toFixed(0)}%`;
-            document.getElementById('tax-savings').textContent = `$${taxSavings.toLocaleString()}`;
-            document.getElementById('net-cost').textContent = `$${netCost.toLocaleString()}`;
+            document.getElementById('max-deductible').textContent = formatter.format(maxDeduction);
+            document.getElementById('tax-savings').textContent = formatter.format(taxSavings);
+            document.getElementById('net-cost').textContent = formatter.format(netCost);
+            
+            // Warning if donation exceeds deductible limit
+            if (donation > maxDeduction) {
+                document.getElementById('max-deductible').style.color = '#f56565';
+            } else {
+                document.getElementById('max-deductible').style.color = '#48bb78';
+            }
         }
         
         // Initialize with default values
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('income').value = '75000';
-            document.getElementById('donation').value = '1000';
+            document.getElementById('income').value = '500000';
+            document.getElementById('donation').value = '10000';
             calculateSavings();
         });
     </script>
