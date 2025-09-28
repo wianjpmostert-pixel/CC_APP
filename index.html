@@ -24,8 +24,8 @@
                     </a>
                     <div class="dropdown-menu">
                         <div id="logged-out-menu">
-                            <a href="#" class="dropdown-item" onclick="showAuthModal('login')">Login</a>
-                            <a href="#" class="dropdown-item" onclick="showAuthModal('register')">Register</a>
+                            <a href="login.html" class="dropdown-item">Login</a>
+                            <a href="register.html" class="dropdown-item">Register</a>
                         </div>
                         <div id="logged-in-menu" style="display: none;">
                             <a href="#profile" class="dropdown-item">My Profile</a>
@@ -353,8 +353,8 @@
                 <i class="fas fa-lock fa-3x"></i>
                 <h2>Login Required</h2>
                 <p>Please login to access your donation dashboard and view your tax certificates.</p>
-                <button class="auth-btn" onclick="showAuthModal('login')">Login Now</button>
-                <p class="auth-switch">Don't have an account? <a href="#" onclick="showAuthModal('register')">Create one here</a></p>
+                <a href="login.html" class="auth-btn">Login Now</a>
+                <p class="auth-switch">Don't have an account? <a href="register.html">Create one here</a></p>
             </div>
         </section>
 
@@ -740,83 +740,6 @@
         <p>Or email us directly: <a href="mailto:your.email@example.com">your.email@example.com</a></p>
     </section>
 
-    <!-- Authentication Modals -->
-    <div id="auth-modal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeAuthModal()">&times;</span>
-            
-            <!-- Login Form -->
-            <div id="login-form" class="auth-form">
-                <h2>Login to Your Account</h2>
-                <form id="login-form-element" onsubmit="return login(event)">
-                    <div class="form-group">
-                        <label for="login-email">Email Address</label>
-                        <input type="email" id="login-email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="login-password">Password</label>
-                        <input type="password" id="login-password" required>
-                    </div>
-                    <button type="submit" class="auth-btn">Login</button>
-                    <p class="auth-switch">Don't have an account? <a href="#" onclick="switchAuthForm('register')">Register here</a></p>
-                </form>
-            </div>
-            
-            <!-- Register Form -->
-            <div id="register-form" class="auth-form" style="display: none;">
-                <h2>Create Your Account</h2>
-                <form id="register-form-element" onsubmit="return register(event)">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="reg-first-name">First Name</label>
-                            <input type="text" id="reg-first-name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="reg-last-name">Last Name</label>
-                            <input type="text" id="reg-last-name" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="reg-email">Email Address</label>
-                        <input type="email" id="reg-email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="reg-password">Password</label>
-                        <input type="password" id="reg-password" minlength="6" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="reg-confirm-password">Confirm Password</label>
-                        <input type="password" id="reg-confirm-password" minlength="6" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="reg-phone">Phone Number</label>
-                        <input type="tel" id="reg-phone" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="reg-id-number">SA ID Number</label>
-                        <input type="text" id="reg-id-number" pattern="[0-9]{13}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="reg-annual-income">Annual Income Range</label>
-                        <select id="reg-annual-income" required>
-                            <option value="">Select Income Range</option>
-                            <option value="0-200000">R0 - R200,000</option>
-                            <option value="200000-500000">R200,000 - R500,000</option>
-                            <option value="500000-1000000">R500,000 - R1,000,000</option>
-                            <option value="1000000+">R1,000,000+</option>
-                        </select>
-                    </div>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="reg-terms" required>
-                        <label for="reg-terms">I agree to the Terms & Conditions and Privacy Policy</label>
-                    </div>
-                    <button type="submit" class="auth-btn">Create Account</button>
-                    <p class="auth-switch">Already have an account? <a href="#" onclick="switchAuthForm('login')">Login here</a></p>
-                </form>
-            </div>
-        </div>
-    </div>
-
     <footer>
         <div class="footer-content">
             <div class="footer-section">
@@ -848,33 +771,98 @@
         let selectedCategory = '';
         let currentUser = null;
 
-        // Authentication functions
-        function showAuthModal(formType) {
-            document.getElementById('auth-modal').style.display = 'block';
-            if (formType === 'login') {
-                document.getElementById('login-form').style.display = 'block';
-                document.getElementById('register-form').style.display = 'none';
-            } else {
-                document.getElementById('login-form').style.display = 'none';
-                document.getElementById('register-form').style.display = 'block';
-            }
-        }
-
-        function closeAuthModal() {
-            document.getElementById('auth-modal').style.display = 'none';
-        }
-
-        function switchAuthForm(formType) {
-            if (formType === 'login') {
-                document.getElementById('login-form').style.display = 'block';
-                document.getElementById('register-form').style.display = 'none';
-            } else {
-                document.getElementById('login-form').style.display = 'none';
-                document.getElementById('register-form').style.display = 'block';
-            }
+        // Authentication functions (removed modal functions)
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('ngo_platform_current_user');
+            updateUIForLoggedOutUser();
+            showPage('home');
+            alert('You have been logged out successfully.');
         }
 
         // File-based Data Storage Functions
+        async function loadUserData() {
+            try {
+                const response = await fetch('./users.json');
+                if (response.ok) {
+                    return await response.json();
+                }
+            } catch (error) {
+                console.log('Creating new user data file...');
+            }
+            
+            return {
+                users: {},
+                donations: {},
+                metadata: {
+                    created: new Date().toISOString(),
+                    version: "1.0",
+                    totalUsers: 0,
+                    totalDonations: 0
+                }
+            };
+        }
+
+        async function saveUserData(data) {
+            localStorage.setItem('ngo_platform_data', JSON.stringify(data));
+        }
+
+        function downloadUserData() {
+            const data = localStorage.getItem('ngo_platform_data');
+            if (data) {
+                const blob = new Blob([data], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'users.json';
+                link.click();
+                URL.revokeObjectURL(url);
+                
+                alert('User data downloaded as users.json\n\nTo persist data, replace the users.json file in your project folder with the downloaded file.');
+            }
+        }
+
+        function saveUser(userData) {
+            localStorage.setItem('ngo_platform_current_user', JSON.stringify(userData));
+        }
+
+        function getUser() {
+            const userData = localStorage.getItem('ngo_platform_current_user');
+            return userData ? JSON.parse(userData) : null;
+        }
+
+        async function getAllUsers() {
+            const data = localStorage.getItem('ngo_platform_data');
+            if (data) {
+                return JSON.parse(data);
+            }
+            return await loadUserData();
+        }
+
+        async function saveAllUsers(userData) {
+            await saveUserData(userData);
+        }
+
+        function getUserDonations() {
+            if (!currentUser) return [];
+            const data = localStorage.getItem('ngo_platform_data');
+            if (data) {
+                const parsed = JSON.parse(data);
+                return parsed.donations[currentUser.email] || [];
+            }
+            return [];
+        }
+
+        async function saveUserDonations(donations) {
+            if (!currentUser) return;
+            
+            const allData = await getAllUsers();
+            if (!allData.donations) allData.donations = {};
+            allData.donations[currentUser.email] = donations;
+            allData.metadata.totalDonations = Object.values(allData.donations).flat().length;
+            
+            await saveAllUsers(allData);
+        }
         async function loadUserData() {
             try {
                 const response = await fetch('./users.json');
@@ -1233,7 +1221,7 @@
         function selectNGO(ngoName, category) {
             if (!currentUser) {
                 alert('Please login to make a donation.');
-                showAuthModal('login');
+                window.location.href = 'login.html';
                 return;
             }
             selectedNGO = ngoName;
@@ -1447,6 +1435,34 @@
                 updateUIForLoggedInUser();
             }
 
+            // Handle URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const page = urlParams.get('page');
+            const loginSuccess = urlParams.get('login');
+            const registerSuccess = urlParams.get('register');
+            
+            // Show success messages and redirect to dashboard
+            if (loginSuccess === 'success' || registerSuccess === 'success') {
+                if (currentUser) {
+                    showPage('dashboard');
+                    if (registerSuccess === 'success') {
+                        setTimeout(() => {
+                            alert(`Welcome to the platform, ${currentUser.firstName}! 🎉\\n\\nYour account is now active and ready to use. You can start making donations and saving on taxes immediately.`);
+                        }, 500);
+                    } else {
+                        setTimeout(() => {
+                            alert(`Welcome back, ${currentUser.firstName}! 👋\\n\\nYour dashboard is now active with all your donation history and tax certificates.`);
+                        }, 500);
+                    }
+                    // Clean up URL
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
+            } else if (page === 'dashboard' && currentUser) {
+                showPage('dashboard');
+                // Clean up URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+
             // Navigation links
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', (e) => {
@@ -1486,7 +1502,7 @@
                     e.preventDefault();
                     if (!currentUser) {
                         alert('Please login to make a donation.');
-                        showAuthModal('login');
+                        window.location.href = 'login.html';
                         return;
                     }
                     

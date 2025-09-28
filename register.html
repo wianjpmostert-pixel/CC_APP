@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - SA NGO Donation Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .auth-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .auth-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .auth-header h1 {
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        
+        .auth-header p {
+            color: #718096;
+            margin: 0;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: #3182ce;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            color: #2c5282;
+        }
+        
+        .back-link i {
+            margin-right: 8px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2d3748;
+            font-weight: 600;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #3182ce;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            margin-top: 4px;
+        }
+        
+        .checkbox-group label {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .auth-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .auth-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .auth-switch {
+            text-align: center;
+            margin-top: 20px;
+            color: #718096;
+        }
+        
+        .auth-switch a {
+            color: #3182ce;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .auth-switch a:hover {
+            text-decoration: underline;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            color: #718096;
+        }
+        
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .auth-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-page">
+        <div class="auth-container">
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </a>
+            
+            <div class="auth-header">
+                <h1>Create Account</h1>
+                <p>Join our donation platform and start saving on taxes</p>
+            </div>
+            
+            <form id="register-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" minlength="6" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" minlength="6" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="idNumber">SA ID Number</label>
+                    <input type="text" id="idNumber" pattern="[0-9]{13}" placeholder="13-digit ID number" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="annualIncome">Annual Income Range</label>
+                    <select id="annualIncome" required>
+                        <option value="">Select Income Range</option>
+                        <option value="0-200000">R0 - R200,000</option>
+                        <option value="200000-500000">R200,000 - R500,000</option>
+                        <option value="500000-1000000">R500,000 - R1,000,000</option>
+                        <option value="1000000+">R1,000,000+</option>
+                    </select>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">I agree to the Terms and Conditions and Privacy Policy. I understand that my donations will be processed according to SARS Section 18A regulations.</label>
+                </div>
+                
+                <button type="submit" class="auth-btn">Create Account</button>
+                
+                <div class="loading" id="loading">
+                    <i class="fas fa-spinner fa-spin"></i> Creating your account...
+                </div>
+            </form>
+            
+            <p class="auth-switch">
+                Already have an account? <a href="login.html">Login here</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // File-based Data Storage Functions
+        async function loadUserData() {
+            try {
+                const response = await fetch('./users.json');
+                if (response.ok) {
+                    return await response.json();
+                }
+            } catch (error) {
+                console.log('Creating new user data file...');
+            }
+            
+            return {
+                users: {},
+                donations: {},
+                metadata: {
+                    created: new Date().toISOString(),
+                    version: "1.0",
+                    totalUsers: 0,
+                    totalDonations: 0
+                }
+            };
+        }
+
+        async function saveUserData(data) {
+            localStorage.setItem('ngo_platform_data', JSON.stringify(data));
+        }
+
+        async function getAllUsers() {
+            const data = localStorage.getItem('ngo_platform_data');
+            if (data) {
+                return JSON.parse(data);
+            }
+            return await loadUserData();
+        }
+
+        async function saveAllUsers(userData) {
+            await saveUserData(userData);
+        }
+
+        function saveUser(userData) {
+            localStorage.setItem('ngo_platform_current_user', JSON.stringify(userData));
+        }
+
+        // Register function
+        async function register(event) {
+            event.preventDefault();
+            
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const phone = document.getElementById('phone').value;
+            const idNumber = document.getElementById('idNumber').value;
+            const annualIncome = document.getElementById('annualIncome').value;
+            const loadingDiv = document.getElementById('loading');
+
+            // Validation
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            if (idNumber.length !== 13) {
+                alert('Please enter a valid 13-digit SA ID number');
+                return;
+            }
+
+            // Show loading
+            loadingDiv.style.display = 'block';
+
+            try {
+                // Check if user already exists
+                const allData = await getAllUsers();
+                
+                if (allData.users[email]) {
+                    alert('User with this email already exists!');
+                    loadingDiv.style.display = 'none';
+                    return;
+                }
+
+                // Create new user
+                const newUser = {
+                    firstName,
+                    lastName,
+                    email,
+                    password,
+                    phone,
+                    idNumber,
+                    annualIncome,
+                    registrationDate: new Date().toISOString(),
+                    totalDonated: 0,
+                    totalTaxSavings: 0
+                };
+
+                // Save to users data
+                allData.users[email] = newUser;
+                allData.metadata.totalUsers = Object.keys(allData.users).length;
+                allData.metadata.lastUpdated = new Date().toISOString();
+                
+                await saveAllUsers(allData);
+
+                // Save as current user
+                saveUser(newUser);
+
+                // Success message
+                alert(`Welcome ${firstName}! Your account has been created successfully.\\n\\nYou're now logged in and ready to start donating and saving on taxes!`);
+                
+                // Redirect to home page with dashboard parameter
+                window.location.href = 'index.html?page=dashboard&register=success';
+                
+            } catch (error) {
+                console.error('Registration error:', error);
+                alert('An error occurred during registration. Please try again.');
+                loadingDiv.style.display = 'none';
+            }
+        }
+
+        // Event listener
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('register-form').addEventListener('submit', register);
+        });
+    </script>
+</body>
+</html>
