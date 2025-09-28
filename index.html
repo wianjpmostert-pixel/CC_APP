@@ -101,6 +101,7 @@
             <div class="results">
                 <div class="result-item">
                     <span class="result-label">Your Tax Rate:</span>
+                    <span id="tax-bracket">-</span>
                 </div>
                 <div class="result-item">
                     <span class="result-label">Maximum Deductible:</span>
@@ -1275,10 +1276,15 @@
                 maximumFractionDigits: 0
             });
             
-            document.getElementById('tax-bracket').textContent = `${(taxRate * 100).toFixed(0)}%`;
-            document.getElementById('max-deductible').textContent = formatter.format(maxDeduction);
-            document.getElementById('tax-savings').textContent = formatter.format(taxSavings);
-            document.getElementById('net-cost').textContent = formatter.format(netCost);
+            const elTaxBracket = document.getElementById('tax-bracket');
+            const elMaxDeductible = document.getElementById('max-deductible');
+            const elTaxSavings = document.getElementById('tax-savings');
+            const elNetCost = document.getElementById('net-cost');
+
+            if (elTaxBracket) elTaxBracket.textContent = `${(taxRate * 100).toFixed(0)}%`;
+            if (elMaxDeductible) elMaxDeductible.textContent = formatter.format(maxDeduction);
+            if (elTaxSavings) elTaxSavings.textContent = formatter.format(taxSavings);
+            if (elNetCost) elNetCost.textContent = formatter.format(netCost);
             
             // Warning if donation exceeds deductible limit
             if (donation > maxDeduction) {
@@ -1302,6 +1308,12 @@
             document.getElementById('preview-savings').textContent = `R${taxSavings.toLocaleString()}`;
             document.getElementById('preview-net').textContent = `R${netCost.toLocaleString()}`;
         }
+
+        // Initialize calculator values on load
+        document.addEventListener('DOMContentLoaded', function() {
+            try { calculateSavings(); } catch (e) { console.warn('calculateSavings init failed', e); }
+            try { updateDonationPreview(); } catch (e) {}
+        });
 
         // Download SARS certificate
         async function downloadCertificate(certId) {
