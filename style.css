@@ -1223,27 +1223,3 @@ section h2 i {
         grid-template-columns: 1fr;
     }
 }
-
-/* Data Management Styles */
-.no-donations {
-    text-align: center;
-    padding: 40px;
-    color: #666;
-}
-
-.no-donations i {
-    font-size: 48px;
-    color: #e53e3e;
-    margin-bottom: 16px;
-    display: block;
-}
-
-.no-donations a {
-    color: #3182ce;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.no-donations a:hover {
-    text-decoration: underline;
-}
