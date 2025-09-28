@@ -748,7 +748,7 @@
             <!-- Login Form -->
             <div id="login-form" class="auth-form">
                 <h2>Login to Your Account</h2>
-                <form onsubmit="login(event)">
+                <form id="login-form-element" onsubmit="return login(event)">
                     <div class="form-group">
                         <label for="login-email">Email Address</label>
                         <input type="email" id="login-email" required>
@@ -765,7 +765,7 @@
             <!-- Register Form -->
             <div id="register-form" class="auth-form" style="display: none;">
                 <h2>Create Your Account</h2>
-                <form onsubmit="register(event)">
+                <form id="register-form-element" onsubmit="return register(event)">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="reg-first-name">First Name</label>
@@ -967,8 +967,12 @@
         // Authentication handlers
         async function login(event) {
             event.preventDefault();
+            console.log('Login function called');
+            
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
+            
+            console.log('Login attempt for email:', email);
 
             // Check if user exists in JSON data
             const allData = await getAllUsers();
@@ -982,10 +986,14 @@
             } else {
                 alert('Invalid email or password. Please try again.');
             }
+            
+            return false; // Prevent form submission
         }
 
         async function register(event) {
             event.preventDefault();
+            console.log('Register function called');
+            
             const firstName = document.getElementById('reg-first-name').value;
             const lastName = document.getElementById('reg-last-name').value;
             const email = document.getElementById('reg-email').value;
@@ -995,9 +1003,11 @@
             const idNumber = document.getElementById('reg-id-number').value;
             const annualIncome = document.getElementById('reg-annual-income').value;
 
+            console.log('Registration attempt for email:', email);
+
             if (password !== confirmPassword) {
                 alert('Passwords do not match!');
-                return;
+                return false;
             }
 
             // Check if user already exists
@@ -1005,7 +1015,7 @@
             
             if (allData.users[email]) {
                 alert('User with this email already exists!');
-                return;
+                return false;
             }
 
             // Create new user
@@ -1035,6 +1045,8 @@
             updateUIForLoggedInUser();
             closeAuthModal();
             alert('Account created successfully! Welcome to the platform.\n\nNote: Use downloadUserData() in browser console to backup your data to users.json file.');
+            
+            return false; // Prevent form submission
         }
 
         function logout() {
@@ -1378,6 +1390,26 @@
             alert(stats);
         }
 
+        // Debug functions (can be called from browser console)
+        function testLogin() {
+            console.log('Testing login function...');
+            const testEvent = { preventDefault: () => console.log('preventDefault called') };
+            login(testEvent);
+        }
+
+        function testRegister() {
+            console.log('Testing register function...');
+            const testEvent = { preventDefault: () => console.log('preventDefault called') };
+            register(testEvent);
+        }
+
+        function debugAuth() {
+            console.log('Current user:', currentUser);
+            console.log('Auth modal exists:', document.getElementById('auth-modal') ? 'Yes' : 'No');
+            console.log('Login form exists:', document.getElementById('login-form-element') ? 'Yes' : 'No');
+            console.log('Register form exists:', document.getElementById('register-form-element') ? 'Yes' : 'No');
+        }
+
         // Tab switching for application forms
         function switchApplyTab(tabName) {
             // Hide all content
@@ -1467,6 +1499,17 @@
                         showPage('dashboard');
                     }
                 });
+            }
+
+            // Authentication form submissions
+            const loginFormElement = document.getElementById('login-form-element');
+            if (loginFormElement) {
+                loginFormElement.addEventListener('submit', login);
+            }
+
+            const registerFormElement = document.getElementById('register-form-element');
+            if (registerFormElement) {
+                registerFormElement.addEventListener('submit', register);
             }
 
             // NGO Application Form
