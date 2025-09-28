@@ -2,11 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>NGO Tax Reduction Demo</title>
+    <title>SA NGO Tax Relief Platform</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-heart"></i> SA NGO Platform
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#donate" class="nav-link">Donate</a>
+                <a href="#dashboard" class="nav-link">Dashboard</a>
+                <a href="#apply" class="nav-link">Apply</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">Account <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="#login" class="dropdown-item">Login</a>
+                        <a href="#register" class="dropdown-item">Register</a>
+                        <a href="#profile" class="dropdown-item">Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <div id="home" class="page active">
     <header>
         <div class="hero-content">
             <h1><i class="fas fa-heart"></i> South African NGO Tax Relief Platform</h1>
@@ -108,79 +133,416 @@
         </div>
     </section>
 
-    <section id="causes">
-        <h2><i class="fas fa-flag"></i> Featured South African Causes & Impact</h2>
-        <div class="causes-grid">
-            <div class="cause-card">
-                <div class="cause-icon">
-                    <i class="fas fa-graduation-cap"></i>
-                </div>
-                <h3>Education in Townships</h3>
-                <p>Support quality education in underserved communities across Gauteng, KwaZulu-Natal, and Eastern Cape townships.</p>
-                <div class="impact-stats">
-                    <div class="impact-item">
-                        <strong>12,400</strong> learners supported
-                    </div>
-                    <div class="impact-item">
-                        <strong>89%</strong> pass rate achieved
-                    </div>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 78%;"></div>
-                </div>
-                <small>R500 sponsors one child's education for 3 months</small>
-                <div class="verification-badge">
-                    <i class="fas fa-certificate"></i> SARS Verified • Quarterly Audited
-                </div>
+    <!-- NGO Selection Section -->
+    <section id="ngo-selection">
+        <h2><i class="fas fa-list"></i> Choose Your NGO to Support</h2>
+        <p>Select from our verified South African NGOs, all SARS Section 18A approved for maximum tax benefits.</p>
+        
+        <div class="ngo-selector">
+            <div class="filter-tabs">
+                <button class="filter-btn active" data-category="all">All NGOs</button>
+                <button class="filter-btn" data-category="education">Education</button>
+                <button class="filter-btn" data-category="healthcare">Healthcare</button>
+                <button class="filter-btn" data-category="water">Water & Sanitation</button>
+                <button class="filter-btn" data-category="poverty">Poverty Relief</button>
+                <button class="filter-btn" data-category="environment">Environment</button>
             </div>
+            
+            <div class="ngo-grid">
+                <div class="ngo-item" data-category="education">
+                    <div class="ngo-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Teach South Africa</h3>
+                    <p>Recruiting and developing exceptional graduates to teach in township schools.</p>
+                    <div class="ngo-details">
+                        <span class="location"><i class="fas fa-map-marker-alt"></i> National</span>
+                        <span class="verified"><i class="fas fa-certificate"></i> SARS Verified</span>
+                    </div>
+                    <button class="donate-btn" onclick="selectNGO('Teach South Africa', 'education')">Donate Now</button>
+                </div>
 
-            <div class="cause-card">
-                <div class="cause-icon">
-                    <i class="fas fa-tint"></i>
-                </div>
-                <h3>Rural Water Access</h3>
-                <p>Provide clean water infrastructure to rural communities in Limpopo, Free State, and Northern Cape.</p>
-                <div class="impact-stats">
-                    <div class="impact-item">
-                        <strong>28,500</strong> people served
+                <div class="ngo-item" data-category="healthcare">
+                    <div class="ngo-logo">
+                        <i class="fas fa-heartbeat"></i>
                     </div>
-                    <div class="impact-item">
-                        <strong>85</strong> boreholes drilled
+                    <h3>Gift of the Givers</h3>
+                    <p>Africa's largest disaster relief organization providing humanitarian aid and medical support.</p>
+                    <div class="ngo-details">
+                        <span class="location"><i class="fas fa-map-marker-alt"></i> National</span>
+                        <span class="verified"><i class="fas fa-certificate"></i> SARS Verified</span>
                     </div>
+                    <button class="donate-btn" onclick="selectNGO('Gift of the Givers', 'healthcare')">Donate Now</button>
                 </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 65%;"></div>
-                </div>
-                <small>R2,500 provides clean water for 50 families</small>
-                <div class="verification-badge">
-                    <i class="fas fa-certificate"></i> SARS Verified • Site Inspected
-                </div>
-            </div>
 
-            <div class="cause-card">
-                <div class="cause-icon">
-                    <i class="fas fa-heartbeat"></i>
-                </div>
-                <h3>Healthcare Access</h3>
-                <p>Mobile clinics and primary healthcare services for remote communities across all provinces.</p>
-                <div class="impact-stats">
-                    <div class="impact-item">
-                        <strong>45,200</strong> patients treated
+                <div class="ngo-item" data-category="water">
+                    <div class="ngo-logo">
+                        <i class="fas fa-tint"></i>
                     </div>
-                    <div class="impact-item">
-                        <strong>92%</strong> vaccination coverage
+                    <h3>Water For People</h3>
+                    <p>Building sustainable water and sanitation solutions in rural South African communities.</p>
+                    <div class="ngo-details">
+                        <span class="location"><i class="fas fa-map-marker-alt"></i> Rural Areas</span>
+                        <span class="verified"><i class="fas fa-certificate"></i> SARS Verified</span>
                     </div>
+                    <button class="donate-btn" onclick="selectNGO('Water For People', 'water')">Donate Now</button>
                 </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 84%;"></div>
+
+                <div class="ngo-item" data-category="poverty">
+                    <div class="ngo-logo">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Nelson Mandela Foundation</h3>
+                    <p>Promoting social justice and fighting poverty through community development programs.</p>
+                    <div class="ngo-details">
+                        <span class="location"><i class="fas fa-map-marker-alt"></i> Gauteng</span>
+                        <span class="verified"><i class="fas fa-certificate"></i> SARS Verified</span>
+                    </div>
+                    <button class="donate-btn" onclick="selectNGO('Nelson Mandela Foundation', 'poverty')">Donate Now</button>
                 </div>
-                <small>R300 provides medical care for 10 people</small>
-                <div class="verification-badge">
-                    <i class="fas fa-certificate"></i> SARS Verified • Impact Tracked
+
+                <div class="ngo-item" data-category="education">
+                    <div class="ngo-logo">
+                        <i class="fas fa-book-reader"></i>
+                    </div>
+                    <h3>READ Educational Trust</h3>
+                    <p>Improving literacy and numeracy in underprivileged South African schools.</p>
+                    <div class="ngo-details">
+                        <span class="location"><i class="fas fa-map-marker-alt"></i> Western Cape</span>
+                        <span class="verified"><i class="fas fa-certificate"></i> SARS Verified</span>
+                    </div>
+                    <button class="donate-btn" onclick="selectNGO('READ Educational Trust', 'education')">Donate Now</button>
+                </div>
+
+                <div class="ngo-item" data-category="environment">
+                    <div class="ngo-logo">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>WWF South Africa</h3>
+                    <p>Conservation and environmental protection across South Africa's diverse ecosystems.</p>
+                    <div class="ngo-details">
+                        <span class="location"><i class="fas fa-map-marker-alt"></i> National</span>
+                        <span class="verified"><i class="fas fa-certificate"></i> SARS Verified</span>
+                    </div>
+                    <button class="donate-btn" onclick="selectNGO('WWF South Africa', 'environment')">Donate Now</button>
+                </div>
+
+                <div class="ngo-item" data-category="healthcare">
+                    <div class="ngo-logo">
+                        <i class="fas fa-stethoscope"></i>
+                    </div>
+                    <h3>Desmond Tutu Health Foundation</h3>
+                    <p>Research and care for HIV/AIDS and tuberculosis in South African communities.</p>
+                    <div class="ngo-details">
+                        <span class="location"><i class="fas fa-map-marker-alt"></i> Western Cape</span>
+                        <span class="verified"><i class="fas fa-certificate"></i> SARS Verified</span>
+                    </div>
+                    <button class="donate-btn" onclick="selectNGO('Desmond Tutu Health Foundation', 'healthcare')">Donate Now</button>
+                </div>
+
+                <div class="ngo-item" data-category="poverty">
+                    <div class="ngo-logo">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>Habitat for Humanity SA</h3>
+                    <p>Building affordable housing solutions for low-income South African families.</p>
+                    <div class="ngo-details">
+                        <span class="location"><i class="fas fa-map-marker-alt"></i> National</span>
+                        <span class="verified"><i class="fas fa-certificate"></i> SARS Verified</span>
+                    </div>
+                    <button class="donate-btn" onclick="selectNGO('Habitat for Humanity SA', 'poverty')">Donate Now</button>
                 </div>
             </div>
         </div>
     </section>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </div> <!-- End Home Section -->
+
+    <!-- Donate Section -->
+    <div id="donate" class="page">
+        <section class="donation-form-section">
+            <h2><i class="fas fa-donate"></i> Make Your Tax-Deductible Donation</h2>
+            <div class="donation-container">
+                <div class="donation-form">
+                    <h3>Selected NGO: <span id="selected-ngo">Choose an NGO</span></h3>
+                    <form id="donation-form">
+                        <div class="form-group">
+                            <label for="donor-name">Full Name</label>
+                            <input type="text" id="donor-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="donor-email">Email Address</label>
+                            <input type="email" id="donor-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="donor-phone">Phone Number</label>
+                            <input type="tel" id="donor-phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="donation-amount">Donation Amount (R)</label>
+                            <input type="number" id="donation-amount" min="50" step="50" value="1000" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="donation-frequency">Frequency</label>
+                            <select id="donation-frequency">
+                                <option value="once">One-time Donation</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="quarterly">Quarterly</option>
+                                <option value="annually">Annually</option>
+                            </select>
+                        </div>
+                        <div class="tax-preview">
+                            <h4>Tax Benefit Preview:</h4>
+                            <p>Donation: <span id="preview-amount">R1,000</span></p>
+                            <p>Tax Savings: <span id="preview-savings">R310</span></p>
+                            <p>Net Cost: <span id="preview-net">R690</span></p>
+                        </div>
+                        <button type="submit" class="donate-submit-btn">Donate Now & Get Certificate</button>
+                    </form>
+                </div>
+                <div class="payment-methods">
+                    <h3>Secure Payment Options</h3>
+                    <div class="payment-icons">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fas fa-university"></i>
+                        <span>EFT</span>
+                    </div>
+                    <div class="security-badges">
+                        <p><i class="fas fa-lock"></i> 256-bit SSL Encrypted</p>
+                        <p><i class="fas fa-shield-alt"></i> SARS Compliant</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div id="dashboard" class="page">
+        <section class="dashboard-section">
+            <h2><i class="fas fa-chart-bar"></i> Your Donation Dashboard</h2>
+            <div class="dashboard-container">
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <i class="fas fa-donate"></i>
+                        <h3>Total Donated</h3>
+                        <p class="stat-value">R15,500</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-calculator"></i>
+                        <h3>Tax Savings</h3>
+                        <p class="stat-value">R4,805</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-heart"></i>
+                        <h3>NGOs Supported</h3>
+                        <p class="stat-value">5</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>Certificates</h3>
+                        <p class="stat-value">12</p>
+                    </div>
+                </div>
+                
+                <div class="dashboard-content">
+                    <div class="donation-history">
+                        <h3>Recent Donations</h3>
+                        <div class="history-table">
+                            <div class="table-header">
+                                <span>Date</span>
+                                <span>NGO</span>
+                                <span>Amount</span>
+                                <span>Tax Saved</span>
+                                <span>Certificate</span>
+                            </div>
+                            <div class="table-row">
+                                <span>2024-12-15</span>
+                                <span>Gift of the Givers</span>
+                                <span>R2,500</span>
+                                <span>R775</span>
+                                <span><button class="download-btn" onclick="downloadCertificate('CERT001')">
+                                    <i class="fas fa-download"></i> Download
+                                </button></span>
+                            </div>
+                            <div class="table-row">
+                                <span>2024-11-20</span>
+                                <span>Teach South Africa</span>
+                                <span>R5,000</span>
+                                <span>R1,550</span>
+                                <span><button class="download-btn" onclick="downloadCertificate('CERT002')">
+                                    <i class="fas fa-download"></i> Download
+                                </button></span>
+                            </div>
+                            <div class="table-row">
+                                <span>2024-10-10</span>
+                                <span>WWF South Africa</span>
+                                <span>R3,000</span>
+                                <span>R930</span>
+                                <span><button class="download-btn" onclick="downloadCertificate('CERT003')">
+                                    <i class="fas fa-download"></i> Download
+                                </button></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="yearly-summary">
+                        <h3>2024 Tax Year Summary</h3>
+                        <div class="summary-card">
+                            <p>Total Donations: <strong>R15,500</strong></p>
+                            <p>Total Tax Savings: <strong>R4,805</strong></p>
+                            <p>Effective Cost: <strong>R10,695</strong></p>
+                            <button class="download-btn large" onclick="downloadAnnualSummary()">
+                                <i class="fas fa-file-pdf"></i> Download Annual Summary
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Apply Section -->
+    <div id="apply" class="page">
+        <section class="apply-section">
+            <h2><i class="fas fa-user-plus"></i> Join Our Platform</h2>
+            <div class="apply-tabs">
+                <button class="apply-tab-btn active" data-tab="donor">Apply as Donor</button>
+                <button class="apply-tab-btn" data-tab="receiver">Apply as NGO</button>
+            </div>
+            
+            <!-- Donor Application -->
+            <div id="donor-application" class="apply-content active">
+                <h3>Become a Verified Donor</h3>
+                <p>Join thousands of South Africans making a difference while saving on taxes.</p>
+                <form class="application-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="donor-first-name">First Name</label>
+                            <input type="text" id="donor-first-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="donor-last-name">Last Name</label>
+                            <input type="text" id="donor-last-name" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="donor-email-apply">Email Address</label>
+                            <input type="email" id="donor-email-apply" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="donor-phone-apply">Phone Number</label>
+                            <input type="tel" id="donor-phone-apply" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="donor-id">SA ID Number</label>
+                        <input type="text" id="donor-id" pattern="[0-9]{13}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="donor-address">Physical Address</label>
+                        <textarea id="donor-address" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="annual-income">Estimated Annual Income Range</label>
+                        <select id="annual-income" required>
+                            <option value="">Select Income Range</option>
+                            <option value="0-200000">R0 - R200,000</option>
+                            <option value="200000-500000">R200,000 - R500,000</option>
+                            <option value="500000-1000000">R500,000 - R1,000,000</option>
+                            <option value="1000000+">R1,000,000+</option>
+                        </select>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="terms-donor" required>
+                        <label for="terms-donor">I agree to the Terms & Conditions and Privacy Policy</label>
+                    </div>
+                    <button type="submit" class="apply-submit-btn">Submit Donor Application</button>
+                </form>
+            </div>
+            
+            <!-- NGO Application -->
+            <div id="ngo-application" class="apply-content">
+                <h3>Register Your NGO</h3>
+                <p>Get verified and start receiving tax-deductible donations from our platform.</p>
+                <form class="application-form">
+                    <div class="form-group">
+                        <label for="ngo-name">Organization Name</label>
+                        <input type="text" id="ngo-name" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ngo-registration">NPO Registration Number</label>
+                            <input type="text" id="ngo-registration" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="section18a-number">Section 18A Number</label>
+                            <input type="text" id="section18a-number" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ngo-category">Primary Focus Area</label>
+                        <select id="ngo-category" required>
+                            <option value="">Select Category</option>
+                            <option value="education">Education</option>
+                            <option value="healthcare">Healthcare</option>
+                            <option value="poverty">Poverty Relief</option>
+                            <option value="environment">Environment</option>
+                            <option value="water">Water & Sanitation</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ngo-description">Organization Description</label>
+                        <textarea id="ngo-description" rows="4" required></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="contact-person">Contact Person</label>
+                            <input type="text" id="contact-person" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-email">Contact Email</label>
+                            <input type="email" id="contact-email" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ngo-address">Physical Address</label>
+                        <textarea id="ngo-address" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="bank-details">Banking Details</label>
+                        <textarea id="bank-details" rows="3" placeholder="Bank name, Account holder, Account number, Branch code" required></textarea>
+                    </div>
+                    <div class="file-upload">
+                        <label>Required Documents:</label>
+                        <div class="file-group">
+                            <label for="npo-certificate">NPO Certificate</label>
+                            <input type="file" id="npo-certificate" accept=".pdf,.jpg,.png" required>
+                        </div>
+                        <div class="file-group">
+                            <label for="section18a-certificate">Section 18A Certificate</label>
+                            <input type="file" id="section18a-certificate" accept=".pdf,.jpg,.png" required>
+                        </div>
+                        <div class="file-group">
+                            <label for="financial-statements">Latest Financial Statements</label>
+                            <input type="file" id="financial-statements" accept=".pdf" required>
+                        </div>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="terms-ngo" required>
+                        <label for="terms-ngo">I agree to the Terms & Conditions, verification process, and quarterly reporting requirements</label>
+                    </div>
+                    <button type="submit" class="apply-submit-btn">Submit NGO Application</button>
+                </form>
+            </div>
+        </section>
+    </div>
 
     <!-- Impact Visualization -->
     <section id="impact-visual">
@@ -260,7 +622,7 @@
             <div class="footer-section">
                 <h3><i class="fas fa-phone"></i> Contact</h3>
                 <p>Email: <a href="mailto:wianjpmostert@gmail.com">wianjpmostert@gmail.com</a></p>
-                <p>Phone: (555) 123-4567</p>
+                <p>Phone: +27 11 123 4567</p>
             </div>
             <div class="footer-section">
                 <h3><i class="fas fa-share-alt"></i> Follow Us</h3>
@@ -272,11 +634,60 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 NGO Tax Reduction Platform | Making giving rewarding</p>
+            <p>&copy; 2025 SA NGO Tax Relief Platform | Making giving rewarding</p>
         </div>
     </footer>
 
     <script>
+        // Global variables
+        let selectedNGO = '';
+        let selectedCategory = '';
+
+        // Navigation functionality
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.querySelector(`[href="#${pageId}"]`).classList.add('active');
+        }
+
+        // NGO filtering
+        function filterNGOs(category) {
+            const ngoItems = document.querySelectorAll('.ngo-item');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            // Update active filter button
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-category="${category}"]`).classList.add('active');
+            
+            // Show/hide NGO items
+            ngoItems.forEach(item => {
+                if (category === 'all' || item.dataset.category === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Select NGO for donation
+        function selectNGO(ngoName, category) {
+            selectedNGO = ngoName;
+            selectedCategory = category;
+            document.getElementById('selected-ngo').textContent = ngoName;
+            showPage('donate');
+        }
+
+        // Tax calculation for South Africa
         function calculateSavings() {
             const income = parseFloat(document.getElementById('income').value) || 0;
             const donation = parseFloat(document.getElementById('donation').value) || 0;
@@ -317,12 +728,107 @@
                 document.getElementById('max-deductible').style.color = '#48bb78';
             }
         }
-        
-        // Initialize with default values
+
+        // Update donation preview
+        function updateDonationPreview() {
+            const amount = parseFloat(document.getElementById('donation-amount').value) || 0;
+            const taxSavings = amount * 0.31; // Assuming 31% tax rate for preview
+            const netCost = amount - taxSavings;
+            
+            document.getElementById('preview-amount').textContent = `R${amount.toLocaleString()}`;
+            document.getElementById('preview-savings').textContent = `R${taxSavings.toLocaleString()}`;
+            document.getElementById('preview-net').textContent = `R${netCost.toLocaleString()}`;
+        }
+
+        // Download SARS certificate
+        function downloadCertificate(certId) {
+            // In a real application, this would generate and download a PDF certificate
+            alert(`Downloading Section 18A certificate ${certId}...\\n\\nThis certificate is SARS-compliant and ready for eFiling submission.`);
+            
+            // Simulate download
+            const link = document.createElement('a');
+            link.href = 'data:text/plain;charset=utf-8,SARS Section 18A Tax Certificate\\n\\nCertificate ID: ' + certId + '\\nDonor: [Donor Name]\\nNGO: [NGO Name]\\nAmount: [Amount]\\nDate: [Date]\\n\\nThis certificate is valid for SARS tax deduction purposes.';
+            link.download = `SARS_Certificate_${certId}.txt`;
+            link.click();
+        }
+
+        // Download annual summary
+        function downloadAnnualSummary() {
+            alert('Downloading your 2024 Annual Donation Summary...\\n\\nThis comprehensive report includes all donations, tax savings, and SARS documentation for easy tax filing.');
+            
+            // Simulate download
+            const link = document.createElement('a');
+            link.href = 'data:text/plain;charset=utf-8,2024 Annual Donation Summary\\n\\nTotal Donations: R15,500\\nTotal Tax Savings: R4,805\\nEffective Cost: R10,695\\n\\nDetailed breakdown and all certificates included.';
+            link.download = '2024_Annual_Donation_Summary.txt';
+            link.click();
+        }
+
+        // Tab switching for application forms
+        function switchApplyTab(tabName) {
+            // Hide all content
+            document.querySelectorAll('.apply-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Show selected content
+            document.getElementById(`${tabName}-application`).classList.add('active');
+            
+            // Update tab buttons
+            document.querySelectorAll('.apply-tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+        }
+
+        // Event listeners
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('income').value = '500000';
-            document.getElementById('donation').value = '10000';
-            calculateSavings();
+            // Navigation links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const pageId = link.getAttribute('href').substring(1);
+                    if (pageId && pageId !== '#') {
+                        showPage(pageId);
+                    }
+                });
+            });
+
+            // Filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterNGOs(btn.dataset.category);
+                });
+            });
+
+            // Apply tab buttons
+            document.querySelectorAll('.apply-tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    switchApplyTab(btn.dataset.tab);
+                });
+            });
+
+            // Donation amount preview
+            const donationAmountInput = document.getElementById('donation-amount');
+            if (donationAmountInput) {
+                donationAmountInput.addEventListener('input', updateDonationPreview);
+                updateDonationPreview(); // Initialize
+            }
+
+            // Form submissions
+            const donationForm = document.getElementById('donation-form');
+            if (donationForm) {
+                donationForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    alert(`Thank you for your donation to ${selectedNGO}!\\n\\nYour Section 18A certificate has been sent to your email and is ready for SARS eFiling.`);
+                });
+            }
+
+            // Initialize calculator if on home page
+            if (document.getElementById('income')) {
+                document.getElementById('income').value = '500000';
+                document.getElementById('donation').value = '10000';
+                calculateSavings();
+            }
         });
     </script>
 </body>

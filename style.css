@@ -11,6 +11,100 @@ body {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
+/* Navigation Styles */
+.navbar {
+    background: rgba(26, 32, 44, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 1em 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2em;
+}
+
+.nav-logo {
+    color: #4fd1c7;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 2em;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 0.5em 1em;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-link:hover, .nav-link.active {
+    background: rgba(79, 209, 199, 0.2);
+    color: #4fd1c7;
+}
+
+.nav-dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: rgba(26, 32, 44, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    min-width: 150px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.nav-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    display: block;
+    color: white;
+    padding: 0.75em 1em;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background: rgba(79, 209, 199, 0.2);
+    color: #4fd1c7;
+}
+
+/* Page System */
+.page {
+    display: none;
+    margin-top: 80px; /* Account for fixed navbar */
+}
+
+.page.active {
+    display: block;
+}
+
 /* Header Styles */
 header {
     background: linear-gradient(135deg, #1a5e90 0%, #2d3748 100%);
@@ -86,27 +180,503 @@ header p {
     margin-top: 0.5em;
 }
 
-/* Section Styles */
-section {
+/* NGO Selection Styles */
+#ngo-selection {
     background: white;
     margin: 2em auto;
     padding: 3em 2em;
     max-width: 1200px;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.filter-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin-bottom: 2em;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    background: #f1f5f9;
+    border: 2px solid #e2e8f0;
+    color: #64748b;
+    padding: 0.75em 1.5em;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.filter-btn.active, .filter-btn:hover {
+    background: #4fd1c7;
+    border-color: #4fd1c7;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.ngo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2em;
+    margin-top: 2em;
+}
+
+.ngo-item {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 15px;
+    padding: 2em;
+    text-align: center;
+    transition: all 0.3s ease;
     position: relative;
 }
 
-section h2 {
-    color: #1a5e90;
-    font-size: 2.5em;
-    text-align: center;
+.ngo-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    border-color: #4fd1c7;
+}
+
+.ngo-logo {
     margin-bottom: 1em;
 }
 
-section h2 i {
-    margin-right: 0.5em;
+.ngo-logo i {
+    font-size: 3em;
     color: #4fd1c7;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.ngo-item h3 {
+    color: #1a5e90;
+    margin-bottom: 1em;
+    font-size: 1.3em;
+}
+
+.ngo-item p {
+    margin-bottom: 1.5em;
+    color: #64748b;
+}
+
+.ngo-details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5em;
+    font-size: 0.9em;
+}
+
+.location {
+    color: #64748b;
+}
+
+.verified {
+    color: #48bb78;
+    font-weight: bold;
+}
+
+.donate-btn {
+    background: linear-gradient(135deg, #4fd1c7 0%, #43e97b 100%);
+    color: white;
+    border: none;
+    padding: 0.75em 2em;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.donate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(79, 209, 199, 0.4);
+}
+
+/* Donation Form Styles */
+.donation-form-section {
+    background: white;
+    margin: 2em auto;
+    padding: 3em 2em;
+    max-width: 1200px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.donation-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3em;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.donation-form h3 {
+    color: #1a5e90;
+    margin-bottom: 1.5em;
+    font-size: 1.5em;
+}
+
+.form-group {
+    margin-bottom: 1.5em;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+    color: #1a5e90;
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 1em;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus, .form-group select:focus {
+    outline: none;
+    border-color: #4fd1c7;
+}
+
+.tax-preview {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1.5em;
+    border-radius: 15px;
+    margin: 1.5em 0;
+}
+
+.tax-preview h4 {
+    margin-bottom: 1em;
+}
+
+.tax-preview p {
+    margin-bottom: 0.5em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.donate-submit-btn {
+    background: linear-gradient(135deg, #4fd1c7 0%, #43e97b 100%);
+    color: white;
+    border: none;
+    padding: 1em 2em;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.donate-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(79, 209, 199, 0.4);
+}
+
+.payment-methods {
+    background: #f8fafc;
+    padding: 2em;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.payment-methods h3 {
+    color: #1a5e90;
+    margin-bottom: 1em;
+}
+
+.payment-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    margin-bottom: 1.5em;
+    font-size: 2em;
+    color: #64748b;
+}
+
+.security-badges p {
+    color: #48bb78;
+    margin-bottom: 0.5em;
+    font-size: 0.9em;
+}
+
+/* Dashboard Styles */
+.dashboard-section {
+    background: white;
+    margin: 2em auto;
+    padding: 3em 2em;
+    max-width: 1200px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2em;
+    margin-bottom: 3em;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2em;
+    border-radius: 15px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card i {
+    font-size: 2.5em;
+    margin-bottom: 0.5em;
+    opacity: 0.8;
+}
+
+.stat-card h3 {
+    margin-bottom: 0.5em;
+    font-size: 1.1em;
+    opacity: 0.9;
+}
+
+.stat-value {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin: 0;
+}
+
+.dashboard-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3em;
+}
+
+.donation-history h3, .yearly-summary h3 {
+    color: #1a5e90;
+    margin-bottom: 1.5em;
+}
+
+.history-table {
+    background: #f8fafc;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table-header, .table-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+    padding: 1em;
+    align-items: center;
+    gap: 1em;
+}
+
+.table-header {
+    background: #1a5e90;
+    color: white;
+    font-weight: bold;
+}
+
+.table-row {
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.table-row:last-child {
+    border-bottom: none;
+}
+
+.table-row:nth-child(even) {
+    background: #f1f5f9;
+}
+
+.download-btn {
+    background: #4fd1c7;
+    color: white;
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+}
+
+.download-btn:hover {
+    background: #38b2ac;
+    transform: scale(1.05);
+}
+
+.download-btn.large {
+    padding: 1em 2em;
+    font-size: 1em;
+    width: 100%;
+    margin-top: 1em;
+}
+
+.summary-card {
+    background: linear-gradient(135deg, #4fd1c7 0%, #43e97b 100%);
+    color: white;
+    padding: 2em;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.summary-card p {
+    margin-bottom: 0.5em;
+}
+
+/* Application Form Styles */
+.apply-section {
+    background: white;
+    margin: 2em auto;
+    padding: 3em 2em;
+    max-width: 1200px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.apply-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2em;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.apply-tab-btn {
+    background: none;
+    border: none;
+    padding: 1em 2em;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: #64748b;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.apply-tab-btn.active, .apply-tab-btn:hover {
+    color: #4fd1c7;
+    border-bottom-color: #4fd1c7;
+}
+
+.apply-content {
+    display: none;
+}
+
+.apply-content.active {
+    display: block;
+}
+
+.apply-content h3 {
+    color: #1a5e90;
+    margin-bottom: 1em;
+    font-size: 2em;
+}
+
+.apply-content > p {
+    color: #64748b;
+    margin-bottom: 2em;
+    font-size: 1.1em;
+}
+
+.application-form {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5em;
+}
+
+.form-group textarea {
+    width: 100%;
+    padding: 1em;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+    resize: vertical;
+}
+
+.form-group textarea:focus {
+    outline: none;
+    border-color: #4fd1c7;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5em;
+    margin-bottom: 2em;
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin-top: 0.25em;
+}
+
+.checkbox-group label {
+    color: #64748b;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+.file-upload {
+    margin-bottom: 2em;
+}
+
+.file-upload > label {
+    display: block;
+    margin-bottom: 1em;
+    font-weight: bold;
+    color: #1a5e90;
+}
+
+.file-group {
+    margin-bottom: 1em;
+    padding: 1em;
+    border: 2px dashed #e2e8f0;
+    border-radius: 10px;
+    transition: border-color 0.3s ease;
+}
+
+.file-group:hover {
+    border-color: #4fd1c7;
+}
+
+.file-group label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: 500;
+    color: #1a5e90;
+}
+
+.apply-submit-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 1em 2em;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.apply-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
 }
 
 /* Tax Calculator Styles */
@@ -550,8 +1120,41 @@ footer {
     opacity: 0.6;
 }
 
+/* Section Styles */
+section {
+    background: white;
+    margin: 2em auto;
+    padding: 3em 2em;
+    max-width: 1200px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+section h2 {
+    color: #1a5e90;
+    font-size: 2.5em;
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+section h2 i {
+    margin-right: 0.5em;
+    color: #4fd1c7;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
+    .nav-menu {
+        flex-direction: column;
+        gap: 1em;
+    }
+    
+    .nav-container {
+        flex-direction: column;
+        gap: 1em;
+    }
+    
     header h1 {
         font-size: 2em;
     }
@@ -568,6 +1171,43 @@ footer {
     
     section h2 {
         font-size: 2em;
+    }
+    
+    .ngo-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .filter-tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .donation-container {
+        grid-template-columns: 1fr;
+        gap: 2em;
+    }
+    
+    .dashboard-content {
+        grid-template-columns: 1fr;
+        gap: 2em;
+    }
+    
+    .dashboard-stats {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .table-header, .table-row {
+        grid-template-columns: 1fr;
+        gap: 0.5em;
+        text-align: center;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .apply-tabs {
+        flex-direction: column;
     }
     
     .impact-container {
