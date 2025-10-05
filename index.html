@@ -107,12 +107,6 @@
                     <span class="result-label">Maximum Deductible:</span>
                     <span id="max-deductible">R10,000</span>
                 </div>
-                <div class="result-item savings">
-                    <span id="tax-savings">R3,100</span>
-                </div>
-                <div class="result-item impact">
-                    <span id="net-cost">R6,900</span>
-                </div>
             </div>
             <div class="tax-info">
                 <p><strong>SARS Guidelines:</strong> You can deduct up to 10% of your taxable income (max R100,000) for donations to SARS-approved Section 18A organizations.</p>
@@ -1282,16 +1276,12 @@
 
                 const elTaxBracket = document.getElementById('tax-bracket');
                 const elMaxDeductible = document.getElementById('max-deductible');
-                const elTaxSavings = document.getElementById('tax-savings');
-                const elNetCost = document.getElementById('net-cost');
-
+                
                 if (elTaxBracket) elTaxBracket.textContent = `${(taxRate * 100).toFixed(0)}%`;
                 if (elMaxDeductible) {
                     elMaxDeductible.textContent = formatter.format(maxDeduction);
                     elMaxDeductible.style.color = donation > maxDeduction ? '#f56565' : '#48bb78';
                 }
-                if (elTaxSavings) elTaxSavings.textContent = formatter.format(taxSavings);
-                if (elNetCost) elNetCost.textContent = formatter.format(netCost);
                         // visible debug indicator for quick verification
                         try {
                             const dbg = document.getElementById('debug-box');
