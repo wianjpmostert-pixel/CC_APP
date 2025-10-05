@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SA NGO Tax Relief Platform</title>
+    <title>IMPACT</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -33,7 +33,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <span class="nav-logo-text">SARSsePUSH</span> 
+                <span class="nav-logo-text">IMPACT</span> 
             </div>
             <div class="nav-menu">
                 <a href="#home" class="nav-link active">Home</a>
@@ -63,8 +63,8 @@
     <div id="home" class="page active">
     <header>
         <div class="hero-content">
-            <h1><i class="fas fa-heart"></i> SARSsePUSH</h1>
-            <p>Helping South Africans make a difference and save on taxes by donating to verified NGOs. SARS approved donations with maximum tax benefits.</p>
+            <h1><i class="fas fa-heart"></i> IMPACT</h1>
+            <p>Helping South Africans make a difference and save on taxes by donating to verified NGOs. IMPACT-approved donations with maximum tax benefits.</p>
             <div class="hero-stats">
                 <div class="stat-item">
                     <i class="fas fa-users"></i>
@@ -108,11 +108,9 @@
                     <span id="max-deductible">R10,000</span>
                 </div>
                 <div class="result-item savings">
-                    <span class="result-label">Your Tax Savings:</span>
                     <span id="tax-savings">R3,100</span>
                 </div>
                 <div class="result-item impact">
-                    <span class="result-label">Net Cost to You:</span>
                     <span id="net-cost">R6,900</span>
                 </div>
             </div>
@@ -730,7 +728,7 @@
 
     <section id="contact">
         <h2>Contact Us</h2>
-        <form action="mailto:your.email@example.com" method="POST" enctype="text/plain">
+    <form action="mailto:Impact@gmail.com" method="POST" enctype="text/plain">
             <label for="name">Name:</label><br>
             <input type="text" id="name" name="name" required><br><br>
 
@@ -742,7 +740,7 @@
 
             <button type="submit">Send</button>
         </form>
-        <p>Or email us directly: <a href="mailto:your.email@example.com">your.email@example.com</a></p>
+    <p>Or email us directly: <a href="mailto:Impact@gmail.com">Impact@gmail.com</a></p>
     </section>
 
     <footer>
@@ -753,7 +751,7 @@
             </div>
             <div class="footer-section">
                 <h3><i class="fas fa-phone"></i> Contact</h3>
-                <p>Email: <a href="mailto:wianjpmostert@gmail.com">wianjpmostert@gmail.com</a></p>
+                <p>Email: <a href="mailto:Impact@gmail.com">Impact@gmail.com</a></p>
                 <p>Phone: +27 11 123 4567</p>
             </div>
             <div class="footer-section">
@@ -766,9 +764,11 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 SARSsePUSH | Making giving rewarding</p>
+            <p>&copy; 2025 IMPACT | Making giving rewarding</p>
         </div>
     </footer>
+
+    <div id="debug-box" style="position:fixed;right:12px;bottom:12px;background:#ffffffcc;padding:8px;border-radius:6px;font-size:12px;color:#111;z-index:9999">Debug: idle</div>
 
     <script>
         // Global variables
@@ -1292,6 +1292,11 @@
                 }
                 if (elTaxSavings) elTaxSavings.textContent = formatter.format(taxSavings);
                 if (elNetCost) elNetCost.textContent = formatter.format(netCost);
+                        // visible debug indicator for quick verification
+                        try {
+                            const dbg = document.getElementById('debug-box');
+                            if (dbg) dbg.textContent = `Calculator updated: ${new Date().toLocaleTimeString()}`;
+                        } catch (e) { /* ignore */ }
             } catch (e) {
                 console.error('calculateSavings error', e);
             }
